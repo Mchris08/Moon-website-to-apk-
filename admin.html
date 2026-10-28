@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M🌓🌓N Admin — Site Control Panel</title>
+<style>
+:root{--green:#16c76a;--ink:#e8eaf2;--muted:#9aa0b4;--bg:#0f1226;--card:#181c36;--border:#262b4d;--accent:#8a6cff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Segoe UI",system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+.container{max-width:860px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:10px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px}
+.moon-mark{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#2a1e52,#0f1226);display:grid;place-items:center;box-shadow:0 0 14px rgba(108,92,231,.55)}
+.wordmark .moon{font-style:normal;display:inline-block;margin:0 -3px;animation:mg 3s ease-in-out infinite}
+.wordmark .moon:nth-child(2){animation-delay:1.5s}
+@keyframes mg{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+.pill{font-size:12px;font-weight:700;background:#221a4d;color:#c9b8ff;padding:5px 14px;border-radius:99px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px;margin:20px 0}
+.card h2{font-size:18px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.card .hint{color:var(--muted);font-size:13px;margin-bottom:16px}
+label{display:block;font-weight:700;font-size:13.5px;margin:14px 0 6px}
+input,select,textarea{width:100%;background:#101431;border:1.5px solid var(--border);border-radius:11px;padding:11px 13px;color:var(--ink);font-family:inherit;font-size:14px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--green)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;font-weight:700;border-radius:999px;font-family:inherit;transition:.15s}
+.btn-green{background:var(--green);color:#fff;padding:13px 28px;font-size:15px}
+.btn-green:hover{filter:brightness(1.1)}
+.btn-ghost{background:transparent;border:1.5px solid var(--border);color:var(--muted);padding:9px 18px;font-size:13px}
+.btn-ghost:hover{color:var(--ink);border-color:var(--muted)}
+.btn-sm{padding:8px 14px;font-size:13px;background:#232a52;color:var(--ink)}
+.wrow{display:grid;grid-template-columns:1fr 1.6fr auto;gap:10px;margin-bottom:10px;align-items:center}
+textarea{min-height:180px;font-family:ui-monospace,Consolas,monospace;font-size:12.5px}
+.note{font-size:12.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+.warn{background:#2a1e10;border:1px solid #6b4d16;color:#f0c674;border-radius:12px;padding:12px 16px;font-size:13px;margin:16px 0;line-height:1.5}
+/* login */
+#login{max-width:400px;margin:14vh auto 0;text-align:center}
+#login .card{padding:36px 30px}
+#login h1{font-size:22px;margin-bottom:4px}
+.bigbtn{width:100%;padding:15px;font-size:16px;margin-top:14px}
+.err{color:#ff7b7b;font-size:13px;margin-top:10px;min-height:18px}
+.hidden{display:none!important}
+.steps{counter-reset:s;margin:14px 0;text-align:left}
+.steps li{list-style:none;padding:8px 0 8px 40px;position:relative;font-size:14px;color:var(--muted)}
+.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:8px;width:26px;height:26px;border-radius:50%;background:#221a4d;color:#c9b8ff;display:grid;place-items:center;font-weight:800;font-size:13px}
+footer{padding:30px 0 40px;text-align:center;color:var(--muted);font-size:12.5px}
+@media(max-width:640px){.row{grid-template-columns:1fr}.wrow{grid-template-columns:1fr;gap:6px}}
+</style>
+</head>
+<body>
+
+<div class="container" id="login">
+  <div class="card">
+    <div class="logo" style="justify-content:center;margin-bottom:14px"><span class="moon-mark">🌙</span><span class="wordmark">M<i class="moon">🌓</i><i class="moon">🌓</i>N Admin</span></div>
+    <h1>Control Panel</h1>
+    <p class="hint" style="margin-bottom:20px">Enter your admin passphrase</p>
+    <input type="password" id="pw" placeholder="Passphrase" onkeydown="if(event.key==='Enter')tryLogin()">
+    <button class="btn btn-green bigbtn" onclick="tryLogin()">Unlock</button>
+    <div class="err" id="err"></div>
+    <p class="note">Default passphrase: <b>moon2026</b> — change it after first login (button appears top-right).</p>
+  </div>
+</div>
+
+<div class="container hidden" id="app">
+  <header>
+    <div class="logo"><span class="moon-mark">🌙</span><span class="wordmark">M<i class="moon">🌓</i><i class="moon">🌓</i>N Admin</span></div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <span class="pill">🔒 owner only</span>
+      <button class="btn btn-ghost" onclick="changePw()">Change passphrase</button>
+    </div>
+  </header>
+
+  <div class="warn">⚠️ <b>How this works on a static site:</b> this panel edits a small config file. Click <b>Publish</b> at the bottom to download <b>moon-config.js</b>, then upload it to your GitHub repo root (overwrite the old one). ~1 minute later your live site shows the new prices, wallets and ad keys. The passphrase only hides this screen — it is not bank-grade security; never store anything here you can't afford to be public (wallet addresses are fine — they're public anyway).</div>
+
+  <!-- PRICING -->
+  <div class="card">
+    <h2>💰 Pricing &amp; Plans</h2>
+    <p class="hint">Shown on the "Upgrade to Pro" section of your live site.</p>
+    <div class="row">
+      <div><label>Pro price</label><input type="number" id="proPrice" value="9" min="0" oninput="build()"></div>
+      <div><label>Currency symbol</label><input type="text" id="currency" value="$" maxlength="3" oninput="build()"></div>
+    </div>
+    <div class="row">
+      <div><label>Billing period</label><select id="period" onchange="build()"><option value="month">per month</option><option value="year">per year</option><option value="once">one-time</option></select></div>
+      <div><label>Your contact email (for payment confirmation)</label><input type="email" id="ownerEmail" value="you@example.com" oninput="build()"></div>
+    </div>
+    <label>Note shown under payment wallets</label>
+    <input type="text" id="proNote" value="Pay, then email your receipt screenshot to the contact above — Pro is activated within 24 hours." oninput="build()">
+  </div>
+
+  <!-- WALLETS -->
+  <div class="card">
+    <h2>👛 Payment Wallets</h2>
+    <p class="hint">Users pay here to upgrade to Pro. Add any method — crypto, PayPal, mobile money. Leave a value empty to hide it.</p>
+    <div id="wallets"></div>
+    <button class="btn btn-sm" onclick="addWallet()">＋ Add wallet</button>
+  </div>
+
+  <!-- ADS -->
+  <div class="card">
+    <h2>📢 Ads (your revenue)</h2>
+    <p class="hint">Injected into every free-plan app. All revenue goes to your account.</p>
+    <div class="row">
+      <div><label>Ad provider</label><select id="adProvider" onchange="build()"><option value="adsterra">Adsterra (works with a website)</option><option value="admob">AdMob (needs a published app)</option></select></div>
+      <div><label>Adsterra banner key</label><input type="text" id="astBanner" placeholder="YOUR_BANNER_KEY" oninput="build()"></div>
+    </div>
+    <div class="row">
+      <div><label>Adsterra popunder / social-bar key</label><input type="text" id="astPop" placeholder="YOUR_POPUNDER_KEY" oninput="build()"></div>
+      <div><label>app-ads.txt seller line (AdMob only)</label><input type="text" id="adsLine" value="google.com, pub-3940256099942544, DIRECT, f08c47fec0942fa0" oninput="build()"></div>
+    </div>
+  </div>
+
+  <!-- IMPORT / PUBLISH -->
+  <div class="card">
+    <h2>📤 Publish Changes</h2>
+    <p class="hint">Download the config file and upload it to your repository root — that's it.</p>
+    <div class="row" style="margin-bottom:14px">
+      <button class="btn btn-green" style="padding:14px" onclick="download()">⬇ Download moon-config.js</button>
+      <button class="btn btn-ghost" style="padding:14px" onclick="document.getElementById('imp').click()">📥 Import existing config</button>
+    </div>
+    <input type="file" id="imp" accept=".js,.json" class="hidden" onchange="importCfg(event)">
+    <ol class="steps">
+      <li>Download <b>moon-config.js</b> above.</li>
+      <li>GitHub → your site repo → <b>Add file → Upload files</b> → upload it → Commit (overwrite the old one).</li>
+      <li>Wait ~1 minute, open your live site, hard-refresh. New prices, wallets &amp; ads are live. 🌙</li>
+    </ol>
+    <label>Generated file (auto-updates as you type)</label>
+    <textarea id="preview" readonly></textarea>
+  </div>
+
+  <footer>M🌓🌓N Admin · separate from your main site — keep its address private-ish, share only the main site link 🌙</footer>
+</div>
+
+<script>
+const DEFAULT_HASH='f9de05027c8aab18a7e03acb402fe38a8a00650b5da47475753024950f77060d';
+const SKEY='mn_cfg';
+function phash(p){return crypto.subtle.digest('SHA-256',new TextEncoder().encode(p)).then(b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join(''));}
+async function tryLogin(){
+  const h=await phash(document.getElementById('pw').value);
+  const saved=localStorage.getItem('mn_phash')||DEFAULT_HASH;
+  if(h===saved){document.getElementById('login').classList.add('hidden');document.getElementById('app').classList.remove('hidden');load();}
+  else document.getElementById('err').textContent='Wrong passphrase. Try again.';
+}
+async function changePw(){
+  const a=prompt('New passphrase (min 6 chars):'); if(!a||a.length<6)return alert('Min 6 characters.');
+  const b=prompt('Repeat new passphrase:'); if(a!==b)return alert('Does not match.');
+  localStorage.setItem('mn_phash',await phash(a)); alert('Passphrase changed on this device/browser. Save it somewhere safe!');
+}
+
+const DEFAULTS={PRO_PRICE:9,CURRENCY:'$',PRO_PERIOD:'month',OWNER_EMAIL:'you@example.com',
+  PRO_NOTE:'Pay, then email your receipt screenshot to the contact above — Pro is activated within 24 hours.',
+  WALLETS:[{label:'Bitcoin (BTC)',value:''},{label:'USDT (TRC-20)',value:''},{label:'PayPal',value:''}],
+  ADS:{ADS_PROVIDER:'adsterra',ADSTERRA_BANNER_KEY:'YOUR_BANNER_KEY',ADSTERRA_POPUNDER_KEY:'YOUR_POPUNDER_KEY',APP_ADS_LINE:'google.com, pub-3940256099942544, DIRECT, f08c47fec0942fa0'}};
+let cfg=JSON.parse(JSON.stringify(DEFAULTS));
+
+function load(){
+  const s=localStorage.getItem(SKEY);
+  if(s){try{cfg=Object.assign(JSON.parse(JSON.stringify(DEFAULTS)),JSON.parse(s));}catch(e){}}
+  document.getElementById('proPrice').value=cfg.PRO_PRICE;
+  document.getElementById('currency').value=cfg.CURRENCY;
+  document.getElementById('period').value=cfg.PRO_PERIOD;
+  document.getElementById('ownerEmail').value=cfg.OWNER_EMAIL;
+  document.getElementById('proNote').value=cfg.PRO_NOTE;
+  document.getElementById('adProvider').value=cfg.ADS.ADS_PROVIDER;
+  document.getElementById('astBanner').value=cfg.ADS.ADSTERRA_BANNER_KEY;
+  document.getElementById('astPop').value=cfg.ADS.ADSTERRA_POPUNDER_KEY;
+  document.getElementById('adsLine').value=cfg.ADS.APP_ADS_LINE;
+  renderWallets(); build();
+}
+function readForm(){
+  cfg.PRO_PRICE=parseFloat(document.getElementById('proPrice').value)||0;
+  cfg.CURRENCY=document.getElementById('currency').value||'$';
+  cfg.PRO_PERIOD=document.getElementById('period').value;
+  cfg.OWNER_EMAIL=document.getElementById('ownerEmail').value.trim();
+  cfg.PRO_NOTE=document.getElementById('proNote').value.trim();
+  cfg.ADS.ADS_PROVIDER=document.getElementById('adProvider').value;
+  cfg.ADS.ADSTERRA_BANNER_KEY=document.getElementById('astBanner').value.trim();
+  cfg.ADS.ADSTERRA_POPUNDER_KEY=document.getElementById('astPop').value.trim();
+  cfg.ADS.APP_ADS_LINE=document.getElementById('adsLine').value.trim();
+  cfg.WALLETS=[...document.querySelectorAll('.wrow')].map(r=>({label:r.querySelector('.wl').value.trim(),value:r.querySelector('.wv').value.trim()}));
+}
+function renderWallets(){
+  const w=document.getElementById('wallets'); w.innerHTML='';
+  cfg.WALLETS.forEach(x=>addWallet(x.label,x.value));
+}
+function addWallet(l,v){
+  const w=document.getElementById('wallets');
+  const r=document.createElement('div'); r.className='wrow';
+  r.innerHTML=`<input class="wl" placeholder="Label, e.g. USDT (TRC-20)" value="${(l||'').replace(/"/g,'&quot;')}" oninput="build()">
+  <input class="wv" placeholder="Address / email / number" value="${(v||'').replace(/"/g,'&quot;')}" oninput="build()">
+  <button class="btn btn-sm" onclick="this.parentElement.remove();build()">✕</button>`;
+  w.appendChild(r); build();
+}
+function build(){
+  readForm();
+  const out={PRO_PRICE:cfg.PRO_PRICE,CURRENCY:cfg.CURRENCY,PRO_PERIOD:cfg.PRO_PERIOD,OWNER_EMAIL:cfg.OWNER_EMAIL,PRO_NOTE:cfg.PRO_NOTE,
+    WALLETS:cfg.WALLETS.filter(w=>w.label||w.value),ADS:cfg.ADS};
+  document.getElementById('preview').value='/* M🌓🌓N site config — generated by the admin panel */\nwindow.MOON_CONFIG = '+JSON.stringify(out,null,2)+';\n';
+  localStorage.setItem(SKEY,JSON.stringify(cfg));
+}
+function download(){
+  build();
+  const blob=new Blob([document.getElementById('preview').value],{type:'text/javascript'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='moon-config.js'; a.click();
+}
+function importCfg(e){
+  const f=e.target.files[0]; if(!f)return;
+  const rd=new FileReader();
+  rd.onload=()=>{
+    try{
+      const m=rd.result.match(/MOON_CONFIG\s*=\s*(\{[\s\S]*?\});/);
+      const o=JSON.parse(m?m[1]:rd.result);
+      cfg=Object.assign(JSON.parse(JSON.stringify(DEFAULTS)),o);
+      localStorage.setItem(SKEY,JSON.stringify(cfg)); load(); alert('Config imported.');
+    }catch(err){alert('Could not read that file.');}
+  };
+  rd.readAsText(f);
+}
+</script>
+</body>
+</html>
