@@ -18,7 +18,7 @@ a{color:var(--gold)}
 h2{font-size:20px;margin-bottom:4px}
 .sub{color:#9aa0b8;font-size:13.5px;margin-bottom:20px}
 header{padding:26px 0 8px}
-.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:22px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:22px;flex-wrap:wrap}
 .logo .moon-mark{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#2a1e52,#0f1226);display:grid;place-items:center;box-shadow:0 0 16px rgba(108,92,231,.6)}
 .wordmark .moon{font-style:normal;display:inline-block;margin:0 -3px;filter:drop-shadow(0 0 6px rgba(255,220,120,.65));animation:moonglow 3s ease-in-out infinite}
 .wordmark .moon:nth-child(2){animation-delay:1.5s}
@@ -55,6 +55,9 @@ textarea{resize:vertical;min-height:60px;font-family:ui-monospace,Consolas,monos
 .addbtn{margin-top:4px;padding:10px 18px;border:1.5px dashed var(--border);border-radius:10px;background:transparent;color:#9aa0b8;font-weight:700;cursor:pointer;font-size:13.5px;font-family:inherit}
 .addbtn:hover{border-color:var(--green);color:var(--green)}
 .hint{color:#8a90ad;font-size:12.5px;margin-top:6px}
+.toggle{display:flex;align-items:center;gap:10px;margin-bottom:10px;cursor:pointer;font-size:14px;font-weight:600;color:#cfd3e8}
+.toggle input{width:18px;height:18px;accent-color:var(--green);cursor:pointer}
+.warn{background:rgba(255,214,90,.08);border:1px solid rgba(255,214,90,.3);border-radius:10px;padding:10px 14px;font-size:12.5px;color:#e8d9a0;margin-bottom:14px}
 
 /* publish */
 #preview{background:#0b0e1f;border:1px solid var(--border);border-radius:10px;padding:16px;max-height:340px;overflow:auto;font-family:ui-monospace,Consolas,monospace;font-size:12px;line-height:1.5;color:#9fe8bb;white-space:pre-wrap;word-break:break-word}
@@ -102,7 +105,7 @@ footer{padding:22px 0 34px;text-align:center;color:#6b7194;font-size:12.5px}
   <!-- PRICING -->
   <div class="card">
     <h2><span class="ic">💰</span>Pricing &amp; Plans</h2>
-    <p class="sub">Shown on the "Upgrade to Pro" section of your live site.</p>
+    <p class="sub">Shown on the "Go Pro" section of your live site.</p>
     <div class="grid2">
       <div class="field"><label>Pro price</label><input type="text" id="PRO_PRICE" placeholder="9.99"></div>
       <div class="field"><label>Currency symbol</label><input type="text" id="CURRENCY" placeholder="$"></div>
@@ -152,26 +155,35 @@ footer{padding:22px 0 34px;text-align:center;color:#6b7194;font-size:12.5px}
   <!-- ADS -->
   <div class="card">
     <h2><span class="ic">📢</span>Ads (your revenue)</h2>
-    <p class="sub">Injected into every free-plan app — all revenue goes to your account.</p>
+    <p class="sub">These are YOUR Adsterra units. The banner is injected into every free-plan APK (bottom strip) and shown on the site. All revenue goes to your account.</p>
+    <div class="warn">⚠️ Per Adsterra: never run <b>Popunder</b> and <b>Social Bar</b> on the same page at the same time — keep exactly one of them enabled (or both off, which is the recommended launch state).</div>
+
+    <h2 style="font-size:16px;margin:6px 0 10px">Site ads (on your webpages)</h2>
+    <label class="toggle"><input type="checkbox" id="SITE_BANNER"> Banner strip pinned at the bottom of the site</label>
+    <label class="toggle"><input type="checkbox" id="SITE_NATIVE"> Native banner in the "Why it's free" section</label>
+    <label class="toggle"><input type="checkbox" id="SITE_SUPPORT_BTN"> "Support us" smartlink button in the footer</label>
+    <label class="toggle"><input type="checkbox" id="ENABLE_POPUNDER"> Popunder (site, goes in &lt;head&gt;) — keep OFF at launch</label>
+    <label class="toggle" style="margin-bottom:16px"><input type="checkbox" id="ENABLE_SOCIALBAR"> Social Bar (site, before &lt;/body&gt;) — never combine with popunder</label>
+
+    <h2 style="font-size:16px;margin:6px 0 10px">Ad unit codes</h2>
     <div class="grid2">
-      <div class="field"><label>Ad provider</label>
-        <select id="ADS_PROVIDER">
-          <option value="adsterra">Adsterra</option>
-          <option value="admob">AdMob</option>
-        </select>
-      </div>
-      <div class="field"><label>app-ads.txt seller line (AdMob only)</label><input type="text" id="APP_ADS_LINE" placeholder="google.com, pub-…, DIRECT, f08c47fec0942fa0"></div>
+      <div class="field"><label>Banner 468x60 key</label><input type="text" id="BANNER_KEY" placeholder="f27ec57d700fdd5933e6552a84e5ff6d">
+        <small>Also injected into every free-plan app (bottom strip).</small></div>
+      <div class="field"><label>Banner invoke script URL</label><input type="text" id="BANNER_SRC" placeholder="https://bauval.org/22/…">
+        <small>The &lt;script src&gt; URL from your banner unit.</small></div>
+      <div class="field"><label>Native banner script URL</label><input type="text" id="NATIVE_SRC" placeholder="https://bauval.org/21/…"></div>
+      <div class="field"><label>Native banner container ID</label><input type="text" id="NATIVE_CONTAINER" placeholder="container-…"></div>
+      <div class="field"><label>Popunder script URL</label><input type="text" id="POPUNDER_SRC" placeholder="https://abscloud.org/1/…"></div>
+      <div class="field"><label>Social Bar script URL</label><input type="text" id="SOCIALBAR_SRC" placeholder="https://bauval.org/14/…"></div>
+      <div class="field"><label>Smartlink URL</label><input type="text" id="SMARTLINK_URL" placeholder="https://araplhn.org/4/…"></div>
+      <div class="field"><label>app-ads.txt seller line (AdMob only — usually not needed)</label><input type="text" id="APP_ADS_LINE" placeholder="google.com, pub-…, DIRECT, f08c47fec0942fa0"></div>
     </div>
-    <div class="field"><label>Adsterra banner key</label><input type="text" id="ADSTERRA_BANNER_KEY" placeholder="e.g. 7a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6">
-      <small>From Adsterra → Banner ad unit code.</small></div>
-    <div class="field"><label>Adsterra popunder / social-bar key</label><input type="text" id="ADSTERRA_POPUNDER_KEY" placeholder="e.g. 12345678">
-      <small>From Adsterra → Popunder or Social Bar ad code.</small></div>
   </div>
 
   <!-- PUBLISH -->
   <div class="card">
     <h2><span class="ic">📤</span>Publish Changes</h2>
-    <p class="sub">This panel edits a config file. Click <b>Publish</b> to download <b>moon-config.js</b>, then upload it to your GitHub repo root (overwrite the old one).</p>
+    <p class="sub">This panel edits the site config. Click <b>Publish</b> to download <b>moon-config.js</b>, then upload it to your GitHub repo root (overwrite the old one). Your ad keys are pre-filled from the live config — publishing never wipes them.</p>
     <div class="btnrow">
       <button class="btn btn-green" onclick="publish()">⬇ Publish — download moon-config.js</button>
       <button class="btn btn-purple" onclick="saveDraft()">💾 Save draft (browser)</button>
@@ -192,7 +204,10 @@ footer{padding:22px 0 34px;text-align:center;color:#6b7194;font-size:12.5px}
 <footer>M🌓🌓N Admin · static-site config panel · changes apply after uploading moon-config.js to your repo</footer>
 
 <script>
-/* ================= CONFIG DEFAULTS (match moon-config.js) ================= */
+/* ============================================================
+   CONFIG DEFAULTS — these are your LIVE keys. They are
+   pre-filled so publishing NEVER wipes your ad account units.
+   ============================================================ */
 const DEFAULTS = {
   PRO_PRICE: "9.99",
   CURRENCY: "$",
@@ -216,11 +231,221 @@ const DEFAULTS = {
   ],
   ADS: {
     PROVIDER: "adsterra",
-    ADSTERRA_BANNER_KEY: "YOUR_ADSTERRA_BANNER_KEY",
-    ADSTERRA_POPUNDER_KEY: "YOUR_ADSTERRA_POPUNDER_KEY",
-    APP_ADS_LINE: "google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0"
+    SITE_BANNER: true,
+    BANNER_KEY: "f27ec57d700fdd5933e6552a84e5ff6d",
+    BANNER_SRC: "https://bauval.org/22/f27ec57d700fdd5933e6552a84e5ff6d",
+    BANNER_WIDTH: 468,
+    BANNER_HEIGHT: 60,
+    SITE_NATIVE: true,
+    NATIVE_SRC: "https://bauval.org/21/a9040797764743a44371d306d1918e39",
+    NATIVE_CONTAINER: "container-a9040797764743a44371d306d1918e39",
+    SITE_SUPPORT_BTN: true,
+    SMARTLINK_URL: "https://araplhn.org/4/1ca881361441ca1cbbb1af6929e1c25f",
+    ENABLE_POPUNDER: false,
+    POPUNDER_SRC: "https://abscloud.org/1/1f0ba2bf6f1d7bb0305242f7262afeb3",
+    ENABLE_SOCIALBAR: false,
+    SOCIALBAR_SRC: "https://bauval.org/14/ad8dc63c5a40fdda45c6e097a8022545",
+    ADSTERRA_BANNER_KEY: "f27ec57d700fdd5933e6552a84e5ff6d",
+    ADSTERRA_POPUNDER_KEY: "",
+    APP_ADS_LINE: ""
   }
 };
+
+/* ============================================================
+   WIRING — the exact auto-wiring code embedded in the published
+   moon-config.js (single source of truth, same as the live file)
+   ============================================================ */
+const HEADER = [
+'/* ============================================================',
+'   M🌓🌓N Website to APK — moon-config.js  (site configuration)',
+'   Provider: ADSTERRA (your account — all revenue is yours)',
+'   Maintained via the admin panel (admin.html).',
+'   Upload to repo ROOT. Loaded by index.html BEFORE the builder.',
+'   ------------------------------------------------------------',
+'   AD PLACEMENT (per Adsterra official docs):',
+'   - Static banner  -> anywhere in <body>  (site: pinned bottom)',
+'   - Native banner  -> anywhere in <body>  (site: monetization section)',
+'   - Popunder       -> before </head>      (DISABLED by default)',
+'   - Social Bar     -> before </body>      (DISABLED by default)',
+'   - Smartlink      -> direct link, used as "Support us" button',
+'   Keep Popunder + Social Bar OFF at launch — never both at once.',
+'   ============================================================ */'
+].join('\n');
+
+const WIRING = String.raw`(function () {
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
+  function pushPlatform() {
+    try {
+      if (window.PLATFORM && window.CFG && window.CFG.ADS) {
+        var A = window.CFG.ADS;
+        if (A.PROVIDER) PLATFORM.ADS_PROVIDER = A.PROVIDER;
+        if (A.BANNER_KEY && !/^YOUR_/.test(A.BANNER_KEY)) {
+          PLATFORM.ADSTERRA_BANNER_KEY = A.BANNER_KEY;
+          PLATFORM.BANNER_SRC = A.BANNER_SRC;
+          PLATFORM.BANNER_W = A.BANNER_WIDTH;
+          PLATFORM.BANNER_H = A.BANNER_HEIGHT;
+        }
+        if (A.ENABLE_POPUNDER && A.POPUNDER_SRC)
+          PLATFORM.ADSTERRA_POPUNDER_KEY = A.POPUNDER_SRC;
+      }
+    } catch (e) {}
+  }
+
+  function siteAds() {
+    var A = (window.CFG && window.CFG.ADS) || {};
+    if (!document.getElementById("mn-site")) return;
+    if (!A.PROVIDER || A.PROVIDER !== "adsterra") return;
+
+    var css = [
+      "#mn-adbar{position:fixed;left:0;right:0;bottom:0;height:50px;z-index:2147483647;background:#fff;text-align:center;overflow:hidden;border-top:1px solid #e6e8ee}",
+      "body{padding-bottom:50px}"
+    ].join("\n");
+    var st = document.createElement("style");
+    st.textContent = css;
+    document.head.appendChild(st);
+
+    if (A.SITE_BANNER !== false && A.BANNER_KEY) {
+      var bar = document.createElement("div");
+      bar.id = "mn-adbar";
+      var o = document.createElement("script");
+      o.type = "text/javascript";
+      o.text = "atOptions = {'key':'" + A.BANNER_KEY + "','format':'iframe','height':50,'width':320,'params':{}};";
+      bar.appendChild(o);
+      var i = document.createElement("script");
+      i.type = "text/javascript";
+      i.src = A.BANNER_SRC || ("https://www.highperformanceformat.com/" + A.BANNER_KEY + "/invoke.js");
+      bar.appendChild(i);
+      document.body.appendChild(bar);
+    }
+
+    if (A.ENABLE_POPUNDER && A.POPUNDER_SRC) {
+      var p = document.createElement("script");
+      p.setAttribute("data-cfasync", "false");
+      p.src = A.POPUNDER_SRC;
+      document.head.appendChild(p);
+    }
+
+    if (A.ENABLE_SOCIALBAR && A.SOCIALBAR_SRC) {
+      var s = document.createElement("script");
+      s.setAttribute("data-cfasync", "false");
+      s.src = A.SOCIALBAR_SRC;
+      document.body.appendChild(s);
+    }
+
+    if (A.SITE_NATIVE !== false && A.NATIVE_SRC) {
+      var slot = document.getElementById("mn-native-slot");
+      if (slot) {
+        if (A.NATIVE_CONTAINER) slot.id = A.NATIVE_CONTAINER;
+        var n = document.createElement("script");
+        n.async = true;
+        n.setAttribute("data-cfasync", "false");
+        n.src = A.NATIVE_SRC;
+        slot.parentNode.insertBefore(n, slot);
+      }
+    }
+
+    if (A.SITE_SUPPORT_BTN !== false && A.SMARTLINK_URL) {
+      var fb = document.querySelector("footer .foot-bottom");
+      if (fb) {
+        var a = document.createElement("a");
+        a.href = A.SMARTLINK_URL;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.textContent = "🌙 Support M🌓🌓N";
+        var supCss = document.createElement("style");
+        supCss.textContent =
+          ".mn-support{display:inline-block;background:#ffd65a;color:#14151a;font-weight:800;font-size:13px;border-radius:999px;padding:8px 18px;margin:4px 0;transition:.2s}" +
+          ".mn-support:hover{transform:translateY(-1px);filter:brightness(1.05)}";
+        document.head.appendChild(supCss);
+        a.className = "mn-support";
+        fb.insertBefore(a, fb.firstChild);
+      }
+    }
+  }
+
+  function render() {
+    var C = (window.CFG && window.CFG.CONTACT) || {};
+    var S = ((window.CFG && window.CFG.SOCIALS) || []).filter(function (x) {
+      return x && x.url && String(x.url).trim();
+    });
+    var items = [];
+    if (C.email && C.email.trim())
+      items.push('<a class="mn-contact" href="mailto:' + esc(C.email.trim()) + '">&#9993; <span>' + esc(C.email.trim()) + "</span></a>");
+    if (C.whatsapp && C.whatsapp.trim())
+      items.push('<a class="mn-contact" href="https://wa.me/' + esc(C.whatsapp.trim()) + '" target="_blank" rel="noopener">&#128172; <span>WhatsApp</span></a>");
+    if (C.telegram && C.telegram.trim()) {
+      var tg = String(C.telegram.trim()).replace(/^@/, "");
+      items.push('<a class="mn-contact" href="https://t.me/' + esc(tg) + '" target="_blank" rel="noopener">&#9992; <span>Telegram</span></a>");
+    }
+    if (C.phone && C.phone.trim())
+      items.push('<a class="mn-contact" href="tel:' + esc(C.phone.trim()) + '">&#128222; <span>' + esc(C.phone.trim()) + "</span></a>");
+
+    var pills = S.map(function (x) {
+      return '<a class="mn-social" href="' + esc(x.url.trim()) + '" target="_blank" rel="noopener">' + esc(x.label) + "</a>";
+    }).join("");
+
+    var html = "";
+    if (items.length)
+      html += '<div class="mn-row"><h4>Contact us</h4><div class="mn-contacts">' + items.join("") + "</div></div>";
+    if (pills)
+      html += '<div class="mn-row"><h4>Follow M&#x1F313;&#x1F313;N</h4><div class="mn-socials">' + pills + "</div></div>";
+    if (!html) return;
+
+    var css = [
+      ".mn-contactbar{padding-top:6px;padding-bottom:26px;display:grid;grid-template-columns:1fr 1fr;gap:28px}",
+      ".mn-contactbar .mn-row h4{color:#fff;font-size:15px;margin-bottom:12px}",
+      ".mn-contacts{display:flex;flex-wrap:wrap;gap:10px 18px}",
+      ".mn-contact{display:inline-flex;align-items:center;gap:7px;color:#c9cede;font-size:14px;padding:6px 12px;border:1px solid #2a2c35;border-radius:999px;transition:.2s}",
+      ".mn-contact:hover{color:#fff;border-color:#16c76a;transform:translateY(-1px)}",
+      ".mn-socials{display:flex;flex-wrap:wrap;gap:10px}",
+      ".mn-social{color:#dfe3f0;font-size:13.5px;font-weight:600;border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:7px 16px;transition:.2s;background:rgba(255,255,255,.04)}",
+      ".mn-social:hover{background:#16c76a;border-color:#16c76a;color:#fff;transform:translateY(-1px)}",
+      ".mn-wa-fab{position:fixed;right:22px;bottom:70px;z-index:9998;width:56px;height:56px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 8px 24px rgba(37,211,102,.45);transition:.2s}",
+      ".mn-wa-fab:hover{transform:scale(1.08)}",
+      "@media(max-width:760px){.mn-contactbar{grid-template-columns:1fr;gap:20px}.mn-wa-fab{bottom:70px}}"
+    ].join("\n");
+    var st = document.createElement("style");
+    st.textContent = css;
+    document.head.appendChild(st);
+
+    var block = document.createElement("div");
+    block.className = "container mn-contactbar";
+    block.innerHTML = html;
+    var footer = document.querySelector("footer");
+    if (footer) {
+      var bottom = footer.querySelector(".foot-bottom");
+      if (bottom && bottom.parentElement) bottom.parentElement.insertBefore(block, bottom);
+      else footer.appendChild(block);
+    }
+
+    if (C.whatsapp && C.whatsapp.trim()) {
+      var fab = document.createElement("a");
+      fab.href = "https://wa.me/" + C.whatsapp.trim();
+      fab.target = "_blank";
+      fab.rel = "noopener";
+      fab.className = "mn-wa-fab";
+      fab.title = "Chat with us on WhatsApp";
+      fab.innerHTML = '<svg viewBox="0 0 32 32" width="30" height="30"><path fill="#fff" d="M16 3C9.4 3 4 8.3 4 14.9c0 2.6.8 5 2.3 7L4.5 28l6.3-1.7c1.9 1 4 1.6 5.2 1.6 6.6 0 12-5.3 12-11.9S22.6 3 16 3zm5.9 16.8c-.3.8-1.5 1.5-2.4 1.6-.6.1-1.4.2-4.1-.9-3.4-1.4-5.6-4.9-5.8-5.1-.2-.2-1.4-1.9-1.4-3.6s.9-2.6 1.3-2.9c.3-.3.7-.4 1-.4h.7c.2 0 .5-.1.8.6.3.8 1.1 2.6 1.2 2.8.1.2.2.4 0 .7-.1.3-.2.4-.4.7l-.6.7c-.2.2-.4.4-.2.8.2.4 1 1.7 2.2 2.7 1.5 1.4 2.8 1.8 3.2 2 .4.2.6.2.8-.1.2-.2.9-1 1.1-1.4.2-.4.5-.3.8-.2.3.1 2.1 1 2.4 1.2.4.2.6.3.7.5.1.1.1.9-.2 1.7z"/></svg>';
+      document.body.appendChild(fab);
+    }
+  }
+
+  function boot() {
+    pushPlatform();
+    siteAds();
+    render();
+  }
+
+  if (document.readyState === "loading")
+    document.addEventListener("DOMContentLoaded", boot);
+  else
+    boot();
+})();`;
 
 /* ================= LOCK ================= */
 /* Change your passphrase here: */
@@ -246,7 +471,7 @@ if (localStorage.getItem(LS_KEY) === "1") showPanel();
 function clone(o){ return JSON.parse(JSON.stringify(o)); }
 let cfg = clone(DEFAULTS);
 
-/* try to load live values from the site's own moon-config.js if present */
+/* load live values from the site's own moon-config.js if present */
 (function(){
   const el = document.createElement('script');
   el.src = 'moon-config.js';
@@ -270,6 +495,9 @@ let cfg = clone(DEFAULTS);
 })();
 
 /* ================= FORM RENDERING ================= */
+function esc(s){
+  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 function addWallet(label, value){
   const rows = document.getElementById('walletRows');
   const div = document.createElement('div');
@@ -294,9 +522,7 @@ function addSocial(label, url){
   div.querySelectorAll('input').forEach(i => i.addEventListener('input', sync));
   sync();
 }
-function esc(s){
-  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+function setChk(id, v){ document.getElementById(id).checked = !!v; }
 
 function fillForm(){
   document.getElementById('PRO_PRICE').value = cfg.PRO_PRICE;
@@ -308,10 +534,21 @@ function fillForm(){
   document.getElementById('C_WHATSAPP').value = cfg.CONTACT.whatsapp || '';
   document.getElementById('C_TELEGRAM').value = cfg.CONTACT.telegram || '';
   document.getElementById('C_PHONE').value = cfg.CONTACT.phone || '';
-  document.getElementById('ADS_PROVIDER').value = cfg.ADS.PROVIDER;
-  document.getElementById('ADSTERRA_BANNER_KEY').value = cfg.ADS.ADSTERRA_BANNER_KEY;
-  document.getElementById('ADSTERRA_POPUNDER_KEY').value = cfg.ADS.ADSTERRA_POPUNDER_KEY;
-  document.getElementById('APP_ADS_LINE').value = cfg.ADS.APP_ADS_LINE;
+
+  const A = cfg.ADS;
+  setChk('SITE_BANNER', A.SITE_BANNER);
+  setChk('SITE_NATIVE', A.SITE_NATIVE);
+  setChk('SITE_SUPPORT_BTN', A.SITE_SUPPORT_BTN);
+  setChk('ENABLE_POPUNDER', A.ENABLE_POPUNDER);
+  setChk('ENABLE_SOCIALBAR', A.ENABLE_SOCIALBAR);
+  document.getElementById('BANNER_KEY').value = A.BANNER_KEY || '';
+  document.getElementById('BANNER_SRC').value = A.BANNER_SRC || '';
+  document.getElementById('NATIVE_SRC').value = A.NATIVE_SRC || '';
+  document.getElementById('NATIVE_CONTAINER').value = A.NATIVE_CONTAINER || '';
+  document.getElementById('POPUNDER_SRC').value = A.POPUNDER_SRC || '';
+  document.getElementById('SOCIALBAR_SRC').value = A.SOCIALBAR_SRC || '';
+  document.getElementById('SMARTLINK_URL').value = A.SMARTLINK_URL || '';
+  document.getElementById('APP_ADS_LINE').value = A.APP_ADS_LINE || '';
 
   document.getElementById('walletRows').innerHTML = '';
   (cfg.WALLETS || []).forEach(w => addWallet(w.label, w.value));
@@ -320,7 +557,7 @@ function fillForm(){
   sync();
 }
 
-/* collect form → cfg */
+/* collect form -> cfg */
 function sync(){
   cfg.PRO_PRICE  = document.getElementById('PRO_PRICE').value;
   cfg.CURRENCY   = document.getElementById('CURRENCY').value;
@@ -333,12 +570,26 @@ function sync(){
     telegram: document.getElementById('C_TELEGRAM').value.trim(),
     phone:    document.getElementById('C_PHONE').value.trim()
   };
-  cfg.ADS = {
-    PROVIDER: document.getElementById('ADS_PROVIDER').value,
-    ADSTERRA_BANNER_KEY:   document.getElementById('ADSTERRA_BANNER_KEY').value.trim(),
-    ADSTERRA_POPUNDER_KEY: document.getElementById('ADSTERRA_POPUNDER_KEY').value.trim(),
+  cfg.ADS = Object.assign(clone(DEFAULTS.ADS), {
+    PROVIDER: "adsterra",
+    SITE_BANNER: document.getElementById('SITE_BANNER').checked,
+    SITE_NATIVE: document.getElementById('SITE_NATIVE').checked,
+    SITE_SUPPORT_BTN: document.getElementById('SITE_SUPPORT_BTN').checked,
+    ENABLE_POPUNDER: document.getElementById('ENABLE_POPUNDER').checked,
+    ENABLE_SOCIALBAR: document.getElementById('ENABLE_SOCIALBAR').checked,
+    BANNER_KEY: document.getElementById('BANNER_KEY').value.trim(),
+    BANNER_SRC: document.getElementById('BANNER_SRC').value.trim(),
+    NATIVE_SRC: document.getElementById('NATIVE_SRC').value.trim(),
+    NATIVE_CONTAINER: document.getElementById('NATIVE_CONTAINER').value.trim(),
+    POPUNDER_SRC: document.getElementById('POPUNDER_SRC').value.trim(),
+    SOCIALBAR_SRC: document.getElementById('SOCIALBAR_SRC').value.trim(),
+    SMARTLINK_URL: document.getElementById('SMARTLINK_URL').value.trim(),
     APP_ADS_LINE: document.getElementById('APP_ADS_LINE').value.trim()
-  };
+  });
+  /* keep legacy aliases in sync so the builder keeps working */
+  cfg.ADS.ADSTERRA_BANNER_KEY = cfg.ADS.BANNER_KEY;
+  cfg.ADS.ADSTERRA_POPUNDER_KEY = cfg.ADS.ENABLE_POPUNDER ? cfg.ADS.POPUNDER_SRC : "";
+
   cfg.WALLETS = Array.from(document.querySelectorAll('#walletRows .row')).map(r => ({
     label: r.querySelector('.w-label').value.trim(),
     value: r.querySelector('.w-value').value.trim()
@@ -357,41 +608,7 @@ document.querySelectorAll('#panel input, #panel select, #panel textarea').forEac
 
 /* ================= GENERATE / PUBLISH ================= */
 function generateFile(){
-  return [
-'/* ============================================================',
-'   M🌓🌓N — moon-config.js  (site configuration)',
-'   Maintained via the admin panel (admin.html).',
-'   Upload to your repo ROOT. Load in index.html BEFORE the',
-'   main builder script:  <script src="moon-config.js"></script>',
-'   ============================================================ */',
-'window.CFG = ' + JSON.stringify(cfg, null, 2) + ';',
-'',
-'/* ---- AUTO-WIRING: footer contact/socials + WhatsApp button ---- */',
-'(function(){',
-'  function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/\'/g,"&#39;");}',
-'  function boot(){',
-'    var C=(window.CFG&&window.CFG.CONTACT)||{};',
-'    var S=((window.CFG&&window.CFG.SOCIALS)||[]).filter(function(x){return x&&x.url&&String(x.url).trim();});',
-'    var items=[];',
-'    if(C.email&&C.email.trim())items.push(\'<a class="mn-contact" href="mailto:\'+esc(C.email.trim())+\'">✉️ <span>\'+esc(C.email.trim())+\'</span></a>\');',
-'    if(C.whatsapp&&C.whatsapp.trim())items.push(\'<a class="mn-contact" href="https://wa.me/\'+esc(C.whatsapp.trim())+\'" target="_blank" rel="noopener">💬 <span>WhatsApp</span></a>\');',
-'    if(C.telegram&&C.telegram.trim()){var tg=String(C.telegram.trim()).replace(/^@/,"");items.push(\'<a class="mn-contact" href="https://t.me/\'+esc(tg)+\'" target="_blank" rel="noopener">✈️ <span>Telegram</span></a>\');}',
-'    if(C.phone&&C.phone.trim())items.push(\'<a class="mn-contact" href="tel:\'+esc(C.phone.trim())+\'">📞 <span>\'+esc(C.phone.trim())+\'</span></a>\');',
-'    var pills=S.map(function(x){return \'<a class="mn-social" href="\'+esc(x.url.trim())+\'" target="_blank" rel="noopener">\'+esc(x.label)+\'</a>\';}).join("");',
-'    var html="";',
-'    if(items.length)html+=\'<div class="mn-row"><h4>Contact us</h4><div class="mn-contacts">\'+items.join("")+"</div></div>";',
-'    if(pills)html+=\'<div class="mn-row"><h4>Follow M🌓🌓N</h4><div class="mn-socials">\'+pills+"</div></div>";',
-'    if(!html)return;',
-'    var css=[".mn-contactbar{padding-top:6px;padding-bottom:26px;display:grid;grid-template-columns:1fr 1fr;gap:28px}",".mn-contactbar .mn-row h4{color:#fff;font-size:15px;margin-bottom:12px}",".mn-contacts{display:flex;flex-wrap:wrap;gap:10px 18px}",".mn-contact{display:inline-flex;align-items:center;gap:7px;color:#c9cede;font-size:14px;padding:6px 12px;border:1px solid #2a2c35;border-radius:999px;transition:.2s}",".mn-contact:hover{color:#fff;border-color:#16c76a;transform:translateY(-1px)}",".mn-socials{display:flex;flex-wrap:wrap;gap:10px}",".mn-social{color:#dfe3f0;font-size:13.5px;font-weight:600;border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:7px 16px;transition:.2s;background:rgba(255,255,255,.04)}",".mn-social:hover{background:#16c76a;border-color:#16c76a;color:#fff;transform:translateY(-1px)}",".mn-wa-fab{position:fixed;right:22px;bottom:22px;z-index:9999;width:56px;height:56px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 8px 24px rgba(37,211,102,.45);transition:.2s;animation:mnwa 2.6s ease-in-out infinite}",".mn-wa-fab:hover{transform:scale(1.08)}","@keyframes mnwa{0%,100%{box-shadow:0 8px 24px rgba(37,211,102,.45)}50%{box-shadow:0 8px 34px rgba(37,211,102,.75)}}","@media(max-width:760px){.mn-contactbar{grid-template-columns:1fr;gap:20px}}"].join("\\n");',
-'    var st=document.createElement("style");st.textContent=css;document.head.appendChild(st);',
-'    var block=document.createElement("div");block.className="container mn-contactbar";block.innerHTML=html;',
-'    var footer=document.querySelector("footer");',
-'    if(footer){var bottom=footer.querySelector(".foot-bottom");if(bottom&&bottom.parentElement)bottom.parentElement.insertBefore(block,bottom);else footer.appendChild(block);}',
-'    if(C.whatsapp&&C.whatsapp.trim()){var fab=document.createElement("a");fab.href="https://wa.me/"+C.whatsapp.trim();fab.target="_blank";fab.rel="noopener";fab.className="mn-wa-fab";fab.title="Chat with us on WhatsApp";fab.innerHTML=\'<svg viewBox="0 0 32 32" width="30" height="30"><path fill="#fff" d="M16 3C9.4 3 4 8.3 4 14.9c0 2.6.8 5 2.3 7L4.5 28l6.3-1.7c1.9 1 4 1.6 5.2 1.6 6.6 0 12-5.3 12-11.9S22.6 3 16 3zm5.9 16.8c-.3.8-1.5 1.5-2.4 1.6-.6.1-1.4.2-4.1-.9-3.4-1.4-5.6-4.9-5.8-5.1-.2-.2-1.4-1.9-1.4-3.6s.9-2.6 1.3-2.9c.3-.3.7-.4 1-.4h.7c.2 0 .5-.1.8.6.3.8 1.1 2.6 1.2 2.8.1.2.2.4 0 .7-.1.3-.2.4-.4.7l-.6.7c-.2.2-.4.4-.2.8.2.4 1 1.7 2.2 2.7 1.5 1.4 2.8 1.8 3.2 2 .4.2.6.2.8-.1.2-.2.9-1 1.1-1.4.2-.4.5-.3.8-.2.3.1 2.1 1 2.4 1.2.4.2.6.3.7.5.1.1.1.9-.2 1.7z"/></svg>\';document.body.appendChild(fab);}',
-'  }',
-'  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);else boot();',
-'})();'
-  ].join('\n');
+  return HEADER + '\nwindow.CFG = ' + JSON.stringify(cfg, null, 2) + ';\n\n' + WIRING + '\n';
 }
 
 function publish(){

@@ -1,22 +1,24 @@
 /* ============================================================
-   M MOON N -- moon-config.js  (site configuration)
-   Provider: ADSTERRA (your account - all revenue is yours)
-   Upload to repo ROOT. In index.html, BEFORE the main builder
-   <script>, add:  <script src="moon-config.js"></script>
+   M🌓🌓N Website to APK — moon-config.js  (site configuration)
+   Provider: ADSTERRA (your account — all revenue is yours)
+   Maintained via the admin panel (admin.html).
+   Upload to repo ROOT. Loaded by index.html BEFORE the builder:
+       <script src="moon-config.js"></script>
    ------------------------------------------------------------
    AD PLACEMENT (per Adsterra official docs):
-   - Static banner -> anywhere in <body>  (we pin it bottom)
-   - Popunder      -> before </head>      (DISABLED by default)
-   - Social Bar    -> before </body>      (DISABLED by default)
-   Enable popunder/socialbar LATER, one at a time, only if you
-   want more revenue - never both at once.
+   - Static banner  -> anywhere in <body>  (site: pinned bottom)
+   - Native banner  -> anywhere in <body>  (site: monetization section)
+   - Popunder       -> before </head>      (DISABLED by default)
+   - Social Bar     -> before </body>      (DISABLED by default)
+   - Smartlink      -> direct link, used as "Support us" button
+   Keep Popunder + Social Bar OFF at launch — never both at once.
    ============================================================ */
 window.CFG = {
   /* ---------- Pricing & Pro plan ---------- */
   PRO_PRICE: "9.99",
   CURRENCY: "$",
   PRO_PERIOD: "month",
-  PRO_NOTE: "After paying, send your proof (screenshot + app name) via WhatsApp or email -- your Pro build will be unlocked.",
+  PRO_NOTE: "After paying, send your proof (screenshot + app name) via WhatsApp or email — your Pro build will be unlocked.",
   OWNER_EMAIL: "you@example.com",
 
   /* ---------- Payment wallets (shown on site) ---------- */
@@ -49,32 +51,45 @@ window.CFG = {
   ADS: {
     PROVIDER: "adsterra",
 
-    /* #5 Banner 468x60 - injected in EVERY free-plan APK (bottom strip) */
+    /* #5 Banner 468x60 - injected in EVERY free-plan APK (bottom strip)
+       + pinned strip on the SITE itself */
+    SITE_BANNER: true,
     BANNER_KEY: "f27ec57d700fdd5933e6552a84e5ff6d",
     BANNER_SRC: "https://bauval.org/22/f27ec57d700fdd5933e6552a84e5ff6d",
     BANNER_WIDTH: 468,
     BANNER_HEIGHT: 60,
 
-    /* #1 Popunder - DISABLED by default. To enable later, set
-       ENABLE_POPUNDER:true and keep only this one extra unit on. */
+    /* #2 Native Banner - SITE monetization section (fits page style) */
+    SITE_NATIVE: true,
+    NATIVE_SRC: "https://bauval.org/21/a9040797764743a44371d306d1918e39",
+    NATIVE_CONTAINER: "container-a9040797764743a44371d306d1918e39",
+
+    /* #4 Smartlink - direct link used as the "Support us" button */
+    SITE_SUPPORT_BTN: true,
+    SMARTLINK_URL: "https://araplhn.org/4/1ca881361441ca1cbbb1af6929e1c25f",
+
+    /* #1 Popunder - DISABLED by default (goes in <head>) */
     ENABLE_POPUNDER: false,
     POPUNDER_SRC: "https://abscloud.org/1/1f0ba2bf6f1d7bb0305242f7262afeb3",
 
-    /* #3 Social Bar - DISABLED by default (do NOT combine with popunder) */
+    /* #3 Social Bar - DISABLED by default (goes before </body>) */
     ENABLE_SOCIALBAR: false,
     SOCIALBAR_SRC: "https://bauval.org/14/ad8dc63c5a40fdda45c6e097a8022545",
 
-    /* #4 Smartlink - direct link, use as a "Support us" button on the site */
-    SMARTLINK_URL: "https://araplhn.org/4/1ca881361441ca1cbbb1af6929e1c25f",
-
-    /* Legacy fields (kept in sync so the admin panel + old builder code work) */
+    /* Legacy fields (kept in sync so the admin panel + builder work) */
     ADSTERRA_BANNER_KEY: "f27ec57d700fdd5933e6552a84e5ff6d",
     ADSTERRA_POPUNDER_KEY: "",
     APP_ADS_LINE: ""
   }
 };
 
-/* ---- AUTO-WIRING: footer contact/socials + WhatsApp button ---- */
+/* ============================================================
+   AUTO-WIRING — runs on every page that loads this file:
+   1. pushes your ad units into the builder's PLATFORM constants
+   2. injects SITE ads (banner strip, native, popunder, social bar,
+      smartlink support button) — index.html only
+   3. renders footer contact/socials + WhatsApp float button
+   ============================================================ */
 (function () {
   function esc(s) {
     return String(s == null ? "" : s)
@@ -82,6 +97,103 @@ window.CFG = {
       .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
 
+  /* ---- 1. PLATFORM push (builder reads these at build time) ---- */
+  function pushPlatform() {
+    try {
+      if (window.PLATFORM && window.CFG && window.CFG.ADS) {
+        var A = window.CFG.ADS;
+        if (A.PROVIDER) PLATFORM.ADS_PROVIDER = A.PROVIDER;
+        if (A.BANNER_KEY && !/^YOUR_/.test(A.BANNER_KEY)) {
+          PLATFORM.ADSTERRA_BANNER_KEY = A.BANNER_KEY;
+          PLATFORM.BANNER_SRC = A.BANNER_SRC;
+          PLATFORM.BANNER_W = A.BANNER_WIDTH;
+          PLATFORM.BANNER_H = A.BANNER_HEIGHT;
+        }
+        if (A.ENABLE_POPUNDER && A.POPUNDER_SRC)
+          PLATFORM.ADSTERRA_POPUNDER_KEY = A.POPUNDER_SRC;
+      }
+    } catch (e) {}
+  }
+
+  /* ---- 2. SITE ads (only on pages marked <body id="mn-site">) ---- */
+  function siteAds() {
+    var A = (window.CFG && window.CFG.ADS) || {};
+    if (!document.getElementById("mn-site")) return;
+    if (!A.PROVIDER || A.PROVIDER !== "adsterra") return;
+
+    var css = [
+      "#mn-adbar{position:fixed;left:0;right:0;bottom:0;height:50px;z-index:2147483647;background:#fff;text-align:center;overflow:hidden;border-top:1px solid #e6e8ee}",
+      "body{padding-bottom:50px}"
+    ].join("\n");
+    var st = document.createElement("style");
+    st.textContent = css;
+    document.head.appendChild(st);
+
+    /* #5 Static banner — pinned bottom strip on the site */
+    if (A.SITE_BANNER !== false && A.BANNER_KEY) {
+      var bar = document.createElement("div");
+      bar.id = "mn-adbar";
+      var o = document.createElement("script");
+      o.type = "text/javascript";
+      o.text = "atOptions = {'key':'" + A.BANNER_KEY + "','format':'iframe','height':50,'width':320,'params':{}};";
+      bar.appendChild(o);
+      var i = document.createElement("script");
+      i.type = "text/javascript";
+      i.src = A.BANNER_SRC || ("https://www.highperformanceformat.com/" + A.BANNER_KEY + "/invoke.js");
+      bar.appendChild(i);
+      document.body.appendChild(bar);
+    }
+
+    /* #1 Popunder — before </head> per Adsterra docs */
+    if (A.ENABLE_POPUNDER && A.POPUNDER_SRC) {
+      var p = document.createElement("script");
+      p.setAttribute("data-cfasync", "false");
+      p.src = A.POPUNDER_SRC;
+      document.head.appendChild(p);
+    }
+
+    /* #3 Social Bar — right above </body> per Adsterra docs */
+    if (A.ENABLE_SOCIALBAR && A.SOCIALBAR_SRC) {
+      var s = document.createElement("script");
+      s.setAttribute("data-cfasync", "false");
+      s.src = A.SOCIALBAR_SRC;
+      document.body.appendChild(s);
+    }
+
+    /* #2 Native Banner — inside the monetization section slot */
+    if (A.SITE_NATIVE !== false && A.NATIVE_SRC) {
+      var slot = document.getElementById("mn-native-slot");
+      if (slot) {
+        if (A.NATIVE_CONTAINER) slot.id = A.NATIVE_CONTAINER;
+        var n = document.createElement("script");
+        n.async = true;
+        n.setAttribute("data-cfasync", "false");
+        n.src = A.NATIVE_SRC;
+        slot.parentNode.insertBefore(n, slot);
+      }
+    }
+
+    /* #4 Smartlink — "Support us" button in the footer */
+    if (A.SITE_SUPPORT_BTN !== false && A.SMARTLINK_URL) {
+      var fb = document.querySelector("footer .foot-bottom");
+      if (fb) {
+        var a = document.createElement("a");
+        a.href = A.SMARTLINK_URL;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.textContent = "🌙 Support M🌓🌓N";
+        var supCss = document.createElement("style");
+        supCss.textContent =
+          ".mn-support{display:inline-block;background:#ffd65a;color:#14151a;font-weight:800;font-size:13px;border-radius:999px;padding:8px 18px;margin:4px 0;transition:.2s}" +
+          ".mn-support:hover{transform:translateY(-1px);filter:brightness(1.05)}";
+        document.head.appendChild(supCss);
+        a.className = "mn-support";
+        fb.insertBefore(a, fb.firstChild);
+      }
+    }
+  }
+
+  /* ---- 3. Footer contact/socials + WhatsApp float button ---- */
   function render() {
     var C = (window.CFG && window.CFG.CONTACT) || {};
     var S = ((window.CFG && window.CFG.SOCIALS) || []).filter(function (x) {
@@ -94,7 +206,7 @@ window.CFG = {
       items.push('<a class="mn-contact" href="https://wa.me/' + esc(C.whatsapp.trim()) + '" target="_blank" rel="noopener">&#128172; <span>WhatsApp</span></a>");
     if (C.telegram && C.telegram.trim()) {
       var tg = String(C.telegram.trim()).replace(/^@/, "");
-      items.push('<a class="mn-contact" href="https://t.me/' + esc(tg) + '" target="_blank" rel="noopener">&#9992; <span>Telegram</span></a>');
+      items.push('<a class="mn-contact" href="https://t.me/' + esc(tg) + '" target="_blank" rel="noopener">&#9992; <span>Telegram</span></a>");
     }
     if (C.phone && C.phone.trim())
       items.push('<a class="mn-contact" href="tel:' + esc(C.phone.trim()) + '">&#128222; <span>' + esc(C.phone.trim()) + "</span></a>");
@@ -119,9 +231,9 @@ window.CFG = {
       ".mn-socials{display:flex;flex-wrap:wrap;gap:10px}",
       ".mn-social{color:#dfe3f0;font-size:13.5px;font-weight:600;border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:7px 16px;transition:.2s;background:rgba(255,255,255,.04)}",
       ".mn-social:hover{background:#16c76a;border-color:#16c76a;color:#fff;transform:translateY(-1px)}",
-      ".mn-wa-fab{position:fixed;right:22px;bottom:22px;z-index:9999;width:56px;height:56px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 8px 24px rgba(37,211,102,.45);transition:.2s}",
+      ".mn-wa-fab{position:fixed;right:22px;bottom:70px;z-index:9998;width:56px;height:56px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 8px 24px rgba(37,211,102,.45);transition:.2s}",
       ".mn-wa-fab:hover{transform:scale(1.08)}",
-      "@media(max-width:760px){.mn-contactbar{grid-template-columns:1fr;gap:20px}}"
+      "@media(max-width:760px){.mn-contactbar{grid-template-columns:1fr;gap:20px}.mn-wa-fab{bottom:70px}}"
     ].join("\n");
     var st = document.createElement("style");
     st.textContent = css;
@@ -150,23 +262,8 @@ window.CFG = {
   }
 
   function boot() {
-    /* push YOUR adsterra config into the builder's PLATFORM constants */
-    try {
-      if (window.PLATFORM && window.CFG && window.CFG.ADS) {
-        var A = window.CFG.ADS;
-        if (A.PROVIDER) PLATFORM.ADS_PROVIDER = A.PROVIDER;
-        if (A.BANNER_KEY && !/^YOUR_/.test(A.BANNER_KEY)) {
-          PLATFORM.ADSTERRA_BANNER_KEY = A.BANNER_KEY;
-          PLATFORM.BANNER_SRC = A.BANNER_SRC;
-          PLATFORM.BANNER_W = A.BANNER_WIDTH;
-          PLATFORM.BANNER_H = A.BANNER_HEIGHT;
-        }
-        if (A.ENABLE_POPUNDER && A.POPUNDER_SRC)
-          PLATFORM.ADSTERRA_POPUNDER_KEY = A.POPUNDER_SRC;
-        if (A.ENABLE_SOCIALBAR && A.SOCIALBAR_SRC)
-          PLATFORM.ADSTERRA_SOCIALBAR_SRC = A.SOCIALBAR_SRC;
-      }
-    } catch (e) {}
+    pushPlatform();
+    siteAds();
     render();
   }
 

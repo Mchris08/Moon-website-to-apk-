@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M🌓🌓N — Website to APK Converter (Free, Ad-Supported)</title>
+<title>M🌓🌓N Website to APK — Free Website → Android App Converter</title>
+<meta name="description" content="Turn any website into a real Android APK — free, in minutes. HTML, ZIP or URL. Debug APK, signed release, split APKs or Google Play AAB.">
 <style>
 :root{
   --green:#16c76a; --green-dark:#0ea857; --ink:#14151a; --muted:#6b7280;
@@ -19,10 +20,10 @@ small.note{color:var(--muted);font-size:12.5px}
 
 /* ---------- Header ---------- */
 header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
-.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
-.logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:20px}
-.logo .mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--green),#1fa2ff);display:grid;place-items:center;color:#fff;font-size:15px}
-.nav-links{display:flex;gap:26px;font-size:15px;font-weight:500;color:var(--muted)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:19px;min-width:0}
+.logo .mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--green),#1fa2ff);display:grid;place-items:center;color:#fff;font-size:15px;flex-shrink:0}
+.nav-links{display:flex;gap:24px;font-size:15px;font-weight:500;color:var(--muted)}
 .nav-links a:hover{color:var(--ink)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;font-weight:700;border-radius:999px;transition:.2s;font-family:inherit}
 .btn-green{background:var(--green);color:#fff;padding:12px 26px;font-size:15px;box-shadow:0 4px 14px rgba(22,199,106,.35)}
@@ -76,7 +77,7 @@ section{padding:64px 0}
 .stepdot.done .d{background:#eafff3;color:var(--green-dark)}
 .builder-body{display:grid;grid-template-columns:1.15fr .85fr}
 .builder-form{padding:28px}
-.builder-side{padding:28px;background:#fbfbfc;border-left:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:18px}
+.builder-side{padding:28px;background:#fbfbfc;border-left:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:14px}
 .bstep{display:none}
 .bstep.active{display:block}
 .field{margin-bottom:16px}
@@ -124,15 +125,16 @@ textarea{font-family:ui-monospace,Consolas,monospace;font-size:13px}
 .phone .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:110px;height:22px;background:#14151a;border-radius:12px;z-index:2}
 .phone .status{height:34px;display:flex;align-items:center;justify-content:space-between;padding:8px 18px 0;font-size:12px;font-weight:700;color:#fff}
 .phone .webview{height:calc(100% - 34px - 50px);overflow:auto;background:#fff}
-.phone .webview .hero-in{color:#fff;padding:30px 20px;text-align:center}
+.phone .webview .hero-in{color:#fff;padding:34px 20px 26px;text-align:center}
 .phone .webview .hero-in h4{font-size:17px;line-height:1.3}
-.phone .webview .hero-in p{font-size:12px;opacity:.9;margin:8px 0 14px}
-.phone .webview .hero-in .mini{display:inline-block;background:#6c2bd9;color:#fff;font-size:12px;font-weight:700;padding:8px 16px;border-radius:8px}
+.phone .webview .hero-in p{font-size:11.5px;opacity:.9;margin:8px 0 14px}
+.phone .webview .hero-in .mini{display:inline-block;background:rgba(255,255,255,.22);color:#fff;font-size:12px;font-weight:700;padding:8px 16px;border-radius:8px}
 .phone .webview .block{padding:18px;text-align:center;border-bottom:8px solid var(--bg)}
 .phone .webview .block .num{font-size:20px;font-weight:800;color:var(--green)}
 .phone .webview .block .lbl{font-size:12px;color:var(--muted)}
 .phone .adbar{height:50px;background:repeating-linear-gradient(45deg,#fff7e0,#fff7e0 10px,#ffefc2 10px,#ffefc2 20px);border-top:1px dashed #e0b64f;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;color:#8a6d1a;font-weight:700}
 .phone .adbar span{font-size:11px}
+.preview-note{font-size:12.5px;color:var(--muted);text-align:center;max-width:280px}
 
 /* monetization section */
 .mon-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
@@ -143,6 +145,8 @@ textarea{font-family:ui-monospace,Consolas,monospace;font-size:13px}
 .rev-strip{margin-top:20px;background:linear-gradient(135deg,#14151a,#241a3f);color:#fff;border-radius:var(--radius);padding:22px 26px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
 .rev-strip .big{font-size:22px;font-weight:800}
 .rev-strip .small{color:#b9b3d4;font-size:13.5px}
+#mn-native-slot{min-height:130px;margin-top:22px;border:1px dashed var(--border);border-radius:var(--radius);background:var(--card);display:grid;place-items:center;overflow:hidden}
+#mn-native-slot:empty::before{content:'Sponsored';color:var(--muted);font-size:12px;letter-spacing:.15em;text-transform:uppercase}
 
 /* ---------- Features grid ---------- */
 .features{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
@@ -195,7 +199,8 @@ footer{margin-top:72px;background:#14151a;color:#aab0bd;padding:44px 0 28px;font
 footer h4{color:#fff;font-size:15px;margin-bottom:12px}
 footer a{display:block;padding:4px 0}
 footer a:hover{color:#fff}
-.foot-bottom{border-top:1px solid #2a2c35;padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:13px}
+.foot-bottom{border-top:1px solid #2a2c35;padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:13px}
+.foot-brand{display:flex;align-items:center;gap:8px;color:#fff;font-weight:800;font-size:17px;margin-bottom:10px}
 
 @media(max-width:980px){
   .nav-links{display:none}
@@ -211,7 +216,7 @@ footer a:hover{color:#fff}
 
 /* ---- M🌓🌓N brand art ---- */
 .brand .moon-mark{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#2a1e52,#0f1226);display:grid;place-items:center;box-shadow:0 0 14px rgba(108,92,231,.55);flex-shrink:0}
-.wordmark{font-weight:800;letter-spacing:.02em;font-size:20px}
+.wordmark{font-weight:800;letter-spacing:.02em;font-size:19px;white-space:nowrap}
 .wordmark .moon{font-style:normal;display:inline-block;margin:0 -3px;filter:drop-shadow(0 0 6px rgba(255,220,120,.65));animation:moonglow 3s ease-in-out infinite}
 .wordmark .moon:nth-child(2){animation-delay:1.5s}
 @keyframes moonglow{0%,100%{transform:rotate(-8deg) scale(1)}50%{transform:rotate(8deg) scale(1.14)}}
@@ -220,6 +225,7 @@ footer a:hover{color:#fff}
 .brand-hero .m2{animation-delay:-3.5s}
 @keyframes moonspin{to{transform:rotate(360deg)}}
 .tagline-art{font-size:12.5px;font-weight:800;letter-spacing:.38em;color:var(--muted);text-transform:uppercase;margin-bottom:16px}
+.tagline-art .sep{color:var(--green)}
 /* ---- format selector ---- */
 .fmts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .fmt{border:2px solid var(--border);border-radius:14px;padding:13px 16px;cursor:pointer;background:#fff;transition:.15s}
@@ -246,15 +252,15 @@ footer a:hover{color:#fff}
 @media(max-width:760px){.pro-wrap{grid-template-columns:1fr}}
 </style>
 </head>
-<body>
+<body id="mn-site">
 
 <header>
   <div class="container nav">
-    <a class="logo brand" href="#"><span class="moon-mark"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="#fff" d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></span><span class="wordmark">M<i class="moon">🌓</i><i class="moon">🌓</i>N</span></a>
+    <a class="logo brand" href="#"><span class="moon-mark"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="#fff" d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></span><span class="wordmark">M<i class="moon">🌓</i><i class="moon">🌓</i>N <span style="font-weight:600;color:var(--muted);font-size:14px">Website to APK</span></span></a>
     <nav class="nav-links">
       <a href="#how">How it works</a>
       <a href="#builder">App builder</a>
-      <a href="#monetization">Monetization</a>
+      <a href="#monetization">Why it's free</a>
       <a href="#pro">Go Pro</a>
       <a href="#faq">FAQ</a>
     </nav>
@@ -267,13 +273,13 @@ footer a:hover{color:#fff}
   <div class="container">
     <span class="badge"><span class="dot"></span>Free website-to-APK converter — no coding</span>
     <div class="brand-hero" aria-label="M🌓🌓N">M<span class="m">🌓</span><span class="m m2">🌓</span>N</div>
-    <div class="tagline-art">Website → APK · Free forever</div>
+    <div class="tagline-art">Website <span class="sep">→</span> APK <span class="sep">·</span> Free forever</div>
     <h1>Turn any website into a real Android <em>APK</em> — free, in minutes</h1>
-    <p class="sub">Paste your HTML, upload a ZIP, or drop a URL — get a complete Android app. Free forever, supported by lightweight ads. No Android Studio, no code.</p>
+    <p class="sub">Paste your HTML, upload a ZIP, or drop a URL — get a complete Android app in the format you choose: installable APK or Google Play AAB. No Android Studio, no code.</p>
     <div class="checks">
       <span><i class="tick">✓</i>Free to start</span>
       <span><i class="tick">✓</i>HTML / ZIP / URL supported</span>
-      <span><i class="tick">✓</i>Free, ad-supported</span>
+      <span><i class="tick">✓</i>You pick the format</span>
       <span><i class="tick">✓</i>APK &amp; AAB export</span>
       <span><i class="tick">✓</i>Google Play ready</span>
     </div>
@@ -286,7 +292,7 @@ footer a:hover{color:#fff}
 
 <div class="container">
   <div class="stats">
-    <div class="stat"><div class="num">2015</div><div class="lbl">Helping creators worldwide since</div></div>
+    <div class="stat"><div class="num">2026</div><div class="lbl">Helping creators worldwide since</div></div>
     <div class="stat"><div class="num">9M+</div><div class="lbl">Apps created on our platform</div></div>
     <div class="stat"><div class="num">4.8M+</div><div class="lbl">Ad impressions served daily</div></div>
     <div class="stat"><div class="num">180+</div><div class="lbl">Countries reached</div></div>
@@ -297,11 +303,11 @@ footer a:hover{color:#fff}
 <section id="how" style="padding-top:24px">
   <div class="container">
     <h2 class="section-title">From web page to APK in 3 steps</h2>
-    <p class="section-sub">Bring your existing web project — we package it, brand it, monetize it, and hand you a real Android app.</p>
+    <p class="section-sub">Bring your existing web project — we package it, brand it, and hand you a real Android app in the format you pick.</p>
     <div class="steps">
-      <div class="step"><div class="n">1</div><h3>Add your HTML project</h3><p>Upload an HTML file, drop a ZIP archive (we unzip it right in your browser), or paste a live URL.</p></div>
-      <div class="step"><div class="n">2</div><h3>Customize &amp; monetize</h3><p>App name, icon, colors, navigation. The free plan is ad-supported, so your app ships with a small banner and occasional interstitial.</p></div>
-      <div class="step"><div class="n">3</div><h3>Generate &amp; publish</h3><p>Pick your format — debug APK, signed release, split APKs or Play Store AAB — compiled by the included one-click workflow.</p></div>
+      <div class="step"><div class="n">1</div><h3>Add your website</h3><p>Upload an HTML file, drop a ZIP archive (we unzip it right in your browser), or paste a live URL.</p></div>
+      <div class="step"><div class="n">2</div><h3>Customize &amp; choose a plan</h3><p>App name, colors, icon. Free plan ships with one small bottom banner that keeps M🌓🌓N free — Pro removes it or plugs in your own ad codes.</p></div>
+      <div class="step"><div class="n">3</div><h3>Pick a format &amp; generate</h3><p>Debug APK for testing, signed release to share, split APKs per CPU, or a Play-ready AAB — compiled by the included one-click workflow.</p></div>
     </div>
   </div>
 </section>
@@ -318,8 +324,8 @@ footer a:hover{color:#fff}
         <div class="stepdots">
           <div class="stepdot active" id="dot1"><span class="d">1</span>Source</div>
           <div class="stepdot" id="dot2"><span class="d">2</span>Customize</div>
-          <div class="stepdot" id="dot3"><span class="d">3</span>Monetization</div>
-          <div class="stepdot" id="dot4"><span class="d">4</span>Build</div>
+          <div class="stepdot" id="dot3"><span class="d">3</span>Plan</div>
+          <div class="stepdot" id="dot4"><span class="d">4</span>Format &amp; Build</div>
         </div>
       </div>
 
@@ -345,7 +351,7 @@ footer a:hover{color:#fff}
               <div class="field">
                 <label>Website URL</label>
                 <input type="url" id="urlInput" placeholder="https://your-site.com">
-                <small>Your live site is wrapped into an installable home-screen app.</small>
+                <small>Your live site is wrapped into an installable Android app.</small>
               </div>
             </div>
             <div id="tab-zip" style="display:none">
@@ -366,169 +372,152 @@ footer a:hover{color:#fff}
             <div class="field">
               <label>App name</label>
               <input type="text" id="appNameInput" placeholder="My Awesome App" oninput="updatePhone()">
-              <small>Your application name. Choose wisely.</small>
+              <small>Shown on the home screen, in the launcher and inside the app.</small>
             </div>
             <div class="field">
               <label>Package name <span style="font-weight:400;color:var(--muted)">(auto-generated)</span></label>
-              <input type="text" id="pkgInput" placeholder="com.apkforge.myawesomeapp" oninput="document.getElementById('pkgInput').dataset.custom='1'">
-              <small>Unique Android ID, e.g. com.apkforge.myawesomeapp. Used to identify your app on Google Play.</small>
+              <input type="text" id="pkgInput" placeholder="com.moon.myawesomeapp" oninput="document.getElementById('pkgInput').dataset.custom='1'">
+              <small>Unique Android ID, e.g. com.moon.myawesomeapp — required for Google Play.</small>
             </div>
             <div class="field">
-              <label>Color theme</label>
+              <label>Theme color</label>
               <div class="swatches" id="swatches"></div>
-              <small>Status bar, splash background and adaptive icon color.</small>
             </div>
             <div class="builder-nav">
               <button class="btn btn-outline" onclick="gotoStep(1)">← Back</button>
-              <button class="btn btn-green" style="min-width:180px" onclick="gotoStep(3)">Next: Monetization →</button>
+              <button class="btn btn-green" style="min-width:180px" onclick="gotoStep(3)">Next: Plan →</button>
             </div>
           </div>
 
-          <!-- STEP 3: MONETIZATION -->
+          <!-- STEP 3: PLAN -->
           <div class="bstep" id="bstep3">
-            <div class="field">
-              <label>Choose your plan</label>
-              <div class="plans">
-                <div class="plan sel" id="planFree" onclick="selectPlan('free')">
-                  <span class="ribbon free">FREE</span>
-                  <div class="pt">Free plan</div>
-                  <div class="pp">$0 forever — ad-supported</div>
-                  <ul>
-                    <li>✓ Full APK / AAB conversion, free</li>
-                    <li>✓ Small banner pinned at app bottom</li>
-                    <li>✓ Occasional popunder / social-bar ad</li>
-                    <li>✓ Ads keep the converter free for everyone</li>
-                    <li>✗ No custom ad units</li>
-                  </ul>
-                </div>
-                <div class="plan" id="planPro" onclick="selectPlan('pro')">
-                  <span class="ribbon">PRO</span>
-                  <div class="pt">Pro plan</div>
-                  <div class="pp"><span data-cfg-price="per">$9/month</span> — your app, your rules</div>
-                  <ul>
-                    <li>✓ <b>Zero ads</b> from us</li>
-                    <li>✓ Your own AdMob units (100% of revenue yours)</li>
-                    <li>✓ White-label (no M🌓🌓N branding)</li>
-                    <li>✓ All formats incl. AAB + Play guidance</li>
-                  </ul>
-                </div>
+            <div class="plans">
+              <div class="plan sel" id="planFree" onclick="selectPlan('free')">
+                <span class="ribbon free">FREE</span>
+                <div class="pt">Free</div>
+                <div class="pp">$0 — ad-supported</div>
+                <ul>
+                  <li>✓ Full APK &amp; AAB export, all formats</li>
+                  <li>✓ One small banner in your app — it keeps M🌓🌓N free for everyone</li>
+                  <li>✓ No account, no card, no catch</li>
+                </ul>
+              </div>
+              <div class="plan" id="planPro" onclick="selectPlan('pro')">
+                <span class="ribbon">PRO</span>
+                <div class="pt">Pro</div>
+                <div class="pp"><span data-cfg-price="per">$9.99/month</span></div>
+                <ul>
+                  <li>✓ Zero platform ads in your apps</li>
+                  <li>✓ Or plug in YOUR ad codes — 100% of revenue is yours</li>
+                  <li>✓ Priority support &amp; early features</li>
+                </ul>
               </div>
             </div>
-            <div class="field" id="ownAdsField" style="display:none">
-              <label>Your ad codes (optional — Pro)</label>
-              <input type="text" id="ownBanner" placeholder="Your banner ad key (e.g. Adsterra atOptions key)" style="margin-bottom:8px">
-              <input type="text" id="ownInter" placeholder="Your popunder / social-bar key">
-              <small>Leave empty to publish with no ads at all. Keys from Adsterra, AdMob or any network that gives you a code snippet.</small>
+            <div id="ownAdsBox" style="display:none;margin-top:18px">
+              <label style="display:flex;gap:8px;align-items:center;font-weight:600;font-size:14px;margin-bottom:10px;cursor:pointer">
+                <input type="checkbox" id="ownAdsChk" onchange="toggleOwnAds()"> Use my own ad codes instead (100% revenue mine)
+              </label>
+              <div id="ownAdsFields" style="display:none">
+                <div class="field"><label>Your banner ad key</label><input type="text" id="ownBannerInput" placeholder="e.g. f27ec57d700fdd5933e6552a84e5ff6d" oninput="state.ownBanner=this.value.trim()"><small>From your ad network’s banner unit (Adsterra key or any iframe banner).</small></div>
+                <div class="field"><label>Your popunder / social bar script URL <span style="font-weight:400;color:var(--muted)">(optional)</span></label><input type="text" id="ownInterInput" placeholder="https://…/abc123.js" oninput="state.ownInter=this.value.trim()"><small>The full script URL from your popunder or social bar unit.</small></div>
+              </div>
             </div>
-            <small class="note" id="adsNote">📢 How the free plan works: a small pinned banner and an occasional popunder/social-bar ad are added to your app. Ads are served through M🌓🌓N’s Adsterra account and fund the free converter — you pay nothing, ever. Pro removes all ads.</small>
             <div class="builder-nav">
               <button class="btn btn-outline" onclick="gotoStep(2)">← Back</button>
-              <button class="btn btn-green" style="min-width:180px" onclick="gotoStep(4)">Next: Build →</button>
+              <button class="btn btn-green" style="min-width:200px" onclick="gotoStep(4)">Next: Format &amp; Build →</button>
             </div>
           </div>
 
-          <!-- STEP 4: BUILD -->
+          <!-- STEP 4: FORMAT & BUILD -->
           <div class="bstep" id="bstep4">
             <div class="field">
-              <label>Choose output format</label>
-              <div class="fmts" id="fmtWrap">
-                <div class="fmt sel" data-fmt="debug" onclick="selectFmt('debug')"><b>APK · Debug</b><span>Fastest — for testing on your device</span></div>
-                <div class="fmt" data-fmt="release" onclick="selectFmt('release')"><b>APK · Release</b><span>Signed — share &amp; sideload anywhere</span></div>
-                <div class="fmt" data-fmt="split" onclick="selectFmt('split')"><b>APK · Split by CPU</b><span>arm64-v8a · armeabi-v7a · x86_64</span></div>
-                <div class="fmt" data-fmt="aab" onclick="selectFmt('aab')"><b>AAB · Play Store</b><span>Upload bundle straight to Google Play</span></div>
+              <label>Choose your output format</label>
+              <div class="fmts" id="fmtGrid">
+                <div class="fmt sel" data-fmt="debug"><b>🔧 Debug APK</b><span>Instant install on your device — best for testing</span></div>
+                <div class="fmt" data-fmt="release"><b>✅ Signed release APK</b><span>Ready to share &amp; sideload anywhere</span></div>
+                <div class="fmt" data-fmt="split"><b>⚡ Split APKs</b><span>One small APK per CPU — arm64-v8a, armeabi-v7a, x86_64</span></div>
+                <div class="fmt" data-fmt="aab"><b>🚀 Google Play AAB</b><span>Upload straight to Play Console</span></div>
               </div>
+              <small>Not sure? Pick <b>Debug APK</b> now — you can rebuild in any other format later with one click in GitHub Actions.</small>
             </div>
             <div class="build-summary" id="buildSummary"></div>
-            <button class="btn btn-purple" style="width:100%;padding:16px;font-size:16px" id="buildBtn" onclick="startBuild()">⚙ Generate Android project (.zip)</button>
-            <small class="note" style="display:block;margin-top:8px">
-              The ZIP contains a complete, compilable Android Studio project — WebView shell, your content, manifest, icons, and (free plan) the ad integration. Browsers can't compile DEX bytecode, so the APK/AAB itself is compiled by the included <b>GitHub Actions workflow</b> or any Android build server. See the README inside the project.
-            </small>
-
             <div class="progress-wrap" id="progressWrap">
               <div class="progress"><div class="bar" id="progressBar"></div></div>
-              <div class="progress-label" id="progressLabel">Preparing…</div>
+              <div class="progress-label" id="progressLabel"></div>
             </div>
-
             <div class="done-panel" id="donePanel">
-              <h4>✅ Project generated!</h4>
+              <h4>🎉 Your Android project is ready!</h4>
               <ol>
-                <li>Push the ZIP to a GitHub repository → Actions automatically compiles your selected format — <b>debug APK, signed release, split APKs or Play Store AAB</b> — as a downloadable artifact.</li>
-                <li>Or open in Android Studio → Run ▶ to install on your device instantly.</li>
-                <li>Or self-host a build API: set <b>window.MOON_BUILD_URL</b> on this page and the builder will POST your config and download the compiled APK directly.</li>
+                <li>The <b>.zip</b> downloaded automatically — push it to GitHub (or upload via the web UI).</li>
+                <li>GitHub Actions compiles your chosen format automatically.</li>
+                <li>Open the <b>Actions</b> tab → download your APK / AAB artifact.</li>
               </ol>
-              <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
-                <button class="btn btn-green" onclick="downloadProject()">⬇ Download project again</button>
-                <button class="btn btn-outline" onclick="gotoStep(1)">Build another app</button>
-              </div>
             </div>
-
             <div class="builder-nav">
               <button class="btn btn-outline" onclick="gotoStep(3)">← Back</button>
-              <span></span>
+              <button class="btn btn-purple" id="buildBtn" onclick="startBuild()">⚙ Generate Android project (.zip)</button>
             </div>
           </div>
+
         </div>
 
         <!-- PHONE PREVIEW COLUMN -->
         <div class="builder-side">
-          <small class="note" style="font-weight:700;letter-spacing:.04em">LIVE PREVIEW</small>
           <div class="phone">
             <div class="notch"></div>
-            <div class="status" id="phoneStatus"><span>9:41</span><span>📶 🔋</span></div>
+            <div class="status ph-status" style="background:#16c76a"><span>9:41</span><span>📶 🔋</span></div>
             <div class="webview">
-              <div class="hero-in" id="phoneHero">
-                <h4 id="phoneTitle">My Awesome App</h4>
-                <p>Converted from HTML to APK — no code, no Android Studio.</p>
+              <div class="hero-in ph-hero" style="background:#16c76a">
+                <h4 class="ph-appname">My App</h4>
+                <p>Powered by M🌓🌓N Website to APK</p>
                 <span class="mini">Get started</span>
               </div>
-              <div class="block"><div class="num">100%</div><div class="lbl">Free to start</div></div>
-              <div class="block"><div class="num">3 min</div><div class="lbl">Average build time</div></div>
-              <div class="block"><div class="num">APK + AAB</div><div class="lbl">Export formats</div></div>
+              <div class="block"><div class="num ph-num" style="color:#16c76a">1.0</div><div class="lbl">first release</div></div>
+              <div class="block"><div class="lbl">WebView shell · Android 7.0+</div></div>
+              <div class="block"><div class="lbl">Theme follows your color ↓</div></div>
             </div>
-            <div class="adbar" id="phoneAd"><span>Advertisement</span>320 × 50 · M🌓🌓N ad banner</div>
+            <div class="adbar"><span>M🌓🌓N</span><span>bottom banner · free plan</span></div>
           </div>
-          <small class="note" id="adPreviewNote" style="text-align:center">Free plan: banner ad pinned to the bottom of every screen</small>
+          <p class="preview-note">Live preview — free-plan apps ship with this small bottom banner. Pro apps are clean (or carry <i>your</i> ads).</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MONETIZATION -->
+<!-- MONETIZATION / WHY FREE -->
 <section id="monetization">
   <div class="container">
-    <h2 class="section-title">How the free plan stays free</h2>
-    <p class="section-sub">M🌓🌓N is free because free apps carry lightweight ads served through our ad account. That's the whole model — no fees, no trials, no catches.</p>
+    <h2 class="section-title">Free forever. Here’s the whole deal.</h2>
+    <p class="section-sub">We don’t charge you and we don’t farm your visitors. Free conversions simply ship with one small banner from the converter — that’s what pays for the service.</p>
     <div class="mon-grid">
-      <div class="mon-card"><div class="ic">📢</div><h3>A small banner</h3><p>A single 320×50 banner is pinned to the bottom of your app. It never covers your content and never blocks interaction.</p></div>
-      <div class="mon-card"><div class="ic">🖼️</div><h3>Occasional popunder</h3><p>A full-screen ad appears rarely — only on certain exits — capped so users stay happy and keep your app installed.</p></div>
-      <div class="mon-card"><div class="ic">✅</div><h3>No app needed to start</h3><p>Our ad partner <b>Adsterra</b> approves websites directly — you can monetize from day one, unlike store-only networks.</p></div>
-      <div class="mon-card"><div class="ic">🚫</div><h3>Remove ads with Pro</h3><p>Pro strips every ad from your app, unlocks your own ad units and white-label branding — for <span data-cfg-price="per">$9/month</span>.</p></div>
+      <div class="mon-card"><div class="ic">📢</div><h3>One small banner in free apps</h3><p>A single bottom strip on each screen of your free app. It funds the converter and never blocks your content.</p></div>
+      <div class="mon-card"><div class="ic">🚫</div><h3>Pro = clean apps</h3><p>Upgrade and your apps ship with zero platform ads — or plug in your own ad units and keep 100% of the revenue.</p></div>
+      <div class="mon-card"><div class="ic">🧼</div><h3>No popups on this site</h3><p>Popunders and social bars stay switched off here — a clean site keeps visitors converting.</p></div>
+      <div class="mon-card"><div class="ic">💚</div><h3>Smartlink support</h3><p>Like the service? Tap the “Support M🌓🌓N” button in the footer — it costs you nothing but helps a lot.</p></div>
     </div>
     <div class="rev-strip">
-      <div>
-        <div class="big">Free forever, funded by ads</div>
-        <div class="small">You convert for free. Lightweight ads in free-plan apps keep the lights on. Prefer zero ads? Go Pro.</div>
-      </div>
-      <a class="btn btn-green" href="#builder" style="padding:14px 30px">Start free →</a>
+      <div class="big">$0 — what you pay</div>
+      <div class="small">Free means free. Lightweight ads fund the converter, not your wallet.</div>
     </div>
+    <div id="mn-native-slot"></div>
   </div>
 </section>
 
-<!-- WHAT YOU GET -->
+<!-- FEATURES -->
 <section style="padding-top:0">
   <div class="container">
-    <h2 class="section-title">What you get</h2>
-    <p class="section-sub">More than a file wrapper — a full branded Android app package from your existing web project.</p>
+    <h2 class="section-title">Everything a real app needs</h2>
+    <p class="section-sub">A full native Android shell around your web content — not just a bookmark.</p>
     <div class="features">
-      <div class="feat"><div class="ic">🤖</div><h3>HTML to APK conversion</h3><p>Package web content into an installable Android app experience.</p></div>
-      <div class="feat"><div class="ic">📢</div><h3>Free stays free</h3><p>Free plan is ad-supported: a small banner + occasional interstitial.</p></div>
-      <div class="feat"><div class="ic">🔔</div><h3>APK / AAB export</h3><p>Download APK for testing and AAB for the Play Store.</p></div>
-      <div class="feat"><div class="ic">🎨</div><h3>Custom branding</h3><p>App name, icon, colors, splash screen and navigation style.</p></div>
-      <div class="feat"><div class="ic">▦</div><h3>Tabs &amp; extra screens</h3><p>Add menu tabs, social links and additional pages to your app.</p></div>
-      <div class="feat"><div class="ic">📊</div><h3>Push notifications</h3><p>Send updates and offers directly to your users' devices.</p></div>
-      <div class="feat"><div class="ic">▶️</div><h3>Fast testing</h3><p>Install on real devices instantly and refine before release.</p></div>
-      <div class="feat"><div class="ic">📦</div><h3>Play Store prep</h3><p>Guidance on store listing, privacy and publishing requirements.</p></div>
+      <div class="feat"><div class="ic">🪟</div><h3>Native WebView shell</h3><p>Fast, hardware-accelerated WebView with JS, DOM storage and back-button navigation.</p></div>
+      <div class="feat"><div class="ic">🎨</div><h3>Your branding</h3><p>App name, package ID, theme color and adaptive launcher icon generated for you.</p></div>
+      <div class="feat"><div class="ic">📦</div><h3>All formats</h3><p>Debug APK, signed release, per-CPU split APKs and Play-ready AAB — pick at build time.</p></div>
+      <div class="feat"><div class="ic">🤖</div><h3>AI-tool friendly</h3><p>Paste HTML straight from Replit, Lovable, Bolt, v0 or Cursor and ship it as an app.</p></div>
+      <div class="feat"><div class="ic">⚡</div><h3>Compiles in the cloud</h3><p>A ready GitHub Actions workflow builds your package — no Android Studio install.</p></div>
+      <div class="feat"><div class="ic">🛡️</div><h3>Offline assets</h3><p>HTML and ZIP sources are bundled into the APK — your app works without a server.</p></div>
+      <div class="feat"><div class="ic">🌐</div><h3>URL wrapping</h3><p>Point the app at your live site and updates appear instantly — no rebuilds.</p></div>
+      <div class="feat"><div class="ic">📈</div><h3>Play Store ready</h3><p>Signed release builds and AAB export tick the boxes Google Play asks for.</p></div>
     </div>
   </div>
 </section>
@@ -536,402 +525,420 @@ footer a:hover{color:#fff}
 <!-- TYPES -->
 <section style="padding-top:0">
   <div class="container">
-    <h2 class="section-title">One builder, every project type</h2>
-    <p class="section-sub">Whether your project is a single file, a zipped bundle, or a live website — there's a workflow for it.</p>
+    <h2 class="section-title">What will you ship today?</h2>
+    <p class="section-sub">If it runs in a browser, it runs as an app.</p>
     <div class="types">
-      <div class="type"><div class="ic">📄</div><h3>HTML file to APK</h3><p>Perfect for static pages, landing pages, simple tools and HTML prototypes.</p></div>
-      <div class="type"><div class="ic">🗜️</div><h3>ZIP to APK</h3><p>Bundle CSS, JavaScript, images and fonts — we unzip in-browser and repackage everything.</p></div>
-      <div class="type"><div class="ic">🔗</div><h3>URL to APK</h3><p>Your site is already online? Paste the link and get an installable home-screen app.</p></div>
-      <div class="type"><div class="ic">🤖</div><h3>AI-built projects</h3><p>Turn output from Replit, Lovable, Bolt, v0, Cursor or ChatGPT into a mobile app.</p></div>
-      <div class="type"><div class="ic">🧮</div><h3>JS tools &amp; calculators</h3><p>Convert interactive JavaScript utilities into standalone Android apps.</p></div>
-      <div class="type"><div class="ic">🛍️</div><h3>Business pages</h3><p>Give your company or portfolio site an app presence without native development.</p></div>
+      <div class="type"><div class="ic">🛍️</div><h3>Online stores</h3><p>WooCommerce, Shopify, Etsy — your shop, one tap away on the home screen.</p></div>
+      <div class="type"><div class="ic">📰</div><h3>Blogs &amp; news</h3><p>WordPress, Ghost, Medium — readers get an app icon instead of a bookmark.</p></div>
+      <div class="type"><div class="ic">🎮</div><h3>HTML5 games</h3><p>Bundle your game as an installable APK with fullscreen WebView performance.</p></div>
+      <div class="type"><div class="ic">🏢</div><h3>Business sites</h3><p>Portfolios, menus, booking pages — hand clients a real app, not a link.</p></div>
+      <div class="type"><div class="ic">📋</div><h3>Dashboards &amp; tools</h3><p>Internal tools, calculators, AI chats — wrap them for the whole team.</p></div>
+      <div class="type"><div class="ic">🎓</div><h3>Courses &amp; communities</h3><p>Skool, Discord, course portals — your community lives on the home screen.</p></div>
     </div>
   </div>
 </section>
 
 <!-- COMPARISON -->
-<section style="padding-top:0">
+<section id="formats" style="padding-top:0">
   <div class="container">
-    <h2 class="section-title">APK converter vs custom development</h2>
-    <p class="section-sub">Converting HTML to APK is the fastest, most affordable route when you already have a working web project.</p>
+    <h2 class="section-title">Free vs Pro — honest comparison</h2>
+    <p class="section-sub">No tricks. The free plan is genuinely full-featured.</p>
     <div class="compare">
       <table>
-        <tr><th>Factor</th><th>M🌓🌓N HTML to APK</th><th>Custom native development</th></tr>
-        <tr><td>Launch time</td><td><span class="tag-good">First version in minutes</span></td><td>Weeks to months depending on scope</td></tr>
-        <tr><td>Cost to start</td><td><span class="tag-good">Free forever (ad-supported)</span></td><td>Developer budget and ongoing maintenance</td></tr>
-        <tr><td>Monetization</td><td><span class="tag-good">Free plan is ad-supported — $0 to you</span></td><td>You build and integrate ads yourself</td></tr>
-        <tr><td>Coding skills</td><td><span class="tag-good">No Java, Kotlin or Android Studio</span></td><td>Requires mobile developers or an agency</td></tr>
-        <tr><td>Best for</td><td>Landing pages, JS tools, MVPs, AI web apps</td><td>Complex native apps with device integrations</td></tr>
+        <tr><th></th><th>🌓 Free</th><th>💎 Pro</th></tr>
+        <tr><td>Price</td><td class="tag-good">$0 forever</td><td><span data-cfg-price="per">$9.99/month</span></td></tr>
+        <tr><td>APK &amp; AAB export</td><td class="tag-good">All formats</td><td class="tag-good">All formats</td></tr>
+        <tr><td>Ads in your app</td><td>One small bottom banner from M🌓🌓N — funds the free service</td><td class="tag-good">None — or your own codes, 100% revenue yours</td></tr>
+        <tr><td>Your own ad units</td><td>—</td><td class="tag-good">Banner + popunder keys supported</td></tr>
+        <tr><td>Branding (name, icon, color)</td><td class="tag-good">Full</td><td class="tag-good">Full</td></tr>
+        <tr><td>Support</td><td>Community</td><td class="tag-good">Priority</td></tr>
       </table>
     </div>
   </div>
 </section>
 
-<!-- AI STRIP -->
-<section>
+<!-- BENEFITS -->
+<section style="padding-top:0">
   <div class="container">
-    <div class="ai-strip">
-      <h2>Built an app with AI? Turn it into an APK for free.</h2>
-      <p>Created a landing page, calculator, dashboard or web app with Replit, Lovable, Bolt, v0 or Cursor? Paste your HTML and get a real Android app — free, no code, in minutes.</p>
-      <div class="chips">
-        <span>Replit</span><span>Lovable</span><span>Bolt</span><span>v0</span>
-        <span>Cursor</span><span>Base44</span><span>Claude</span><span>ChatGPT</span>
-      </div>
-      <a class="btn btn-green" href="#builder" style="padding:15px 36px;font-size:16px">Convert &amp; monetize →</a>
+    <h2 class="section-title">Why creators choose M🌓🌓N</h2>
+    <p class="section-sub">Built for people who ship fast.</p>
+    <div class="benefits">
+      <div class="benefit"><div class="ic">⏱️</div><div><h3>Minutes, not days</h3><p>No SDK setup, no Gradle fights. Paste, customize, download a compilable project.</p></div></div>
+      <div class="benefit"><div class="ic">💸</div><div><h3>Truly free to start</h3><p>The free plan is the product, not a trial. The banner in free apps keeps the lights on.</p></div></div>
+      <div class="benefit"><div class="ic">🔒</div><div><h3>Your code stays yours</h3><p>Everything runs in your browser — your HTML is never uploaded to our servers.</p></div></div>
     </div>
   </div>
 </section>
 
-<!-- UPGRADE / PRO -->
-<section id="pro" style="padding-top:0">
+<!-- PRO -->
+<section id="pro" style="background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
   <div class="container">
-    <h2 class="section-title">Upgrade to Pro</h2>
-    <p class="section-sub">Remove every ad from your apps, plug in your own ad codes and white-label your brand.</p>
+    <h2 class="section-title">Go Pro</h2>
+    <p class="section-sub">Remove the banner completely — or plug in your own ad network and keep every cent.</p>
     <div class="pro-wrap">
       <div class="pro-card price">
-        <div class="pro-amt"><span data-cfg-price="per">$9/month</span></div>
+        <h3>Pro</h3>
+        <div class="pro-amt" data-cfg-price>$9.99</div>
         <ul>
-          <li>✓ Zero ads from us</li>
-          <li>✓ Your own ad codes (100% revenue yours)</li>
-          <li>✓ White-label — no M🌓🌓N branding</li>
-          <li>✓ All formats incl. AAB + Play guidance</li>
+          <li>✓ Zero platform ads in your apps</li>
+          <li>✓ Your own ad units — 100% revenue yours</li>
           <li>✓ Priority support</li>
+          <li>✓ Cancel anytime — apps you built stay yours</li>
         </ul>
       </div>
       <div class="pro-card pay">
-        <h3>💳 Pay with any of these</h3>
-        <ul class="wallets" id="walletList"></ul>
+        <h3>Pay with</h3>
+        <ul class="wallets" id="walletList"><li class="wempty">Payment methods coming soon — check back shortly.</li></ul>
         <p class="pronote" id="proNote"></p>
-        <p class="procontact">Contact: <b id="ownerEmail"></b></p>
+        <p class="procontact">Questions? <b id="ownerEmail"></b></p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- FAQ -->
-<section id="faq" style="padding-top:0">
+<section id="faq">
   <div class="container">
     <h2 class="section-title">Frequently asked questions</h2>
-    <p class="section-sub">Everything you need to know about generating APKs and the built-in ad system.</p>
+    <p class="section-sub">Everything else you might be wondering.</p>
     <div class="faq">
-      <div class="faq-item"><button class="faq-q">Is the APK generation real?<span class="pm">+</span></button>
-        <div class="faq-a"><p>Yes. The builder generates a complete, compilable Android project in your browser — WebView shell, your HTML/assets, manifest, icons and ad code. The final DEX/APK compilation runs on the included GitHub Actions workflow (push the project, get a signed APK artifact) or on your own build server via the documented API.</p></div></div>
-      <div class="faq-item"><button class="faq-q">Do free-plan apps really show ads?<span class="pm">+</span></button>
-        <div class="faq-a"><p>Yes. The free plan is ad-supported: a small banner pinned to the bottom and an occasional exit interstitial are compiled into every free APK, along with an app-ads.txt file. The ads fund the free service.</p></div></div>
-      <div class="faq-item"><button class="faq-q">Whose ads are shown in my app?<span class="pm">+</span></button>
-        <div class="faq-a"><p>Ads are served through M🌓🌓N's verified Adsterra account. Adsterra monetizes websites directly — no published app required — and that's what pays for the free converter. You never pay anything.</p></div></div>
-      <div class="faq-item"><button class="faq-q">Can I use my own ad account?<span class="pm">+</span></button>
-        <div class="faq-a"><p>Yes — with Pro you can paste your own ad codes (Adsterra, AdMob or any network) and keep 100% of that revenue, or ship completely ad-free. On the free plan, ads come from our account to keep the service free for everyone.</p></div></div>
-      <div class="faq-item"><button class="faq-q">What if my project has CSS, JavaScript and images?<span class="pm">+</span></button>
-        <div class="faq-a"><p>Use the ZIP mode. We unzip it directly in your browser and repackage every file — text and binary — into the APK's assets folder, exactly as uploaded.</p></div></div>
-      <div class="faq-item"><button class="faq-q">Can I publish on Google Play?<span class="pm">+</span></button>
-        <div class="faq-a"><p>Yes. The project targets the latest Android API and includes release build configuration and an AAB-ready structure. Review Google's policy on WebView apps and ads before submitting.</p></div></div>
-      <div class="faq-item"><button class="faq-q">Is it really free?<span class="pm">+</span></button>
-        <div class="faq-a"><p>Yes. Building and downloading is free forever, funded by the lightweight ads in free-plan apps. Pro removes ads for <span data-cfg-price="per">$9/month</span>.</p></div></div>
+      <div class="faq-item">
+        <button class="faq-q">Is it really free? What’s the catch?<span class="pm">+</span></button>
+        <div class="faq-a"><p>Really free. Apps built on the free plan include one small banner at the bottom of each screen — that’s the ad that funds the converter. There’s no catch, no trial countdown, no card required.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Which format should I choose?<span class="pm">+</span></button>
+        <div class="faq-a"><p><b>Debug APK</b> for testing on your own phone. <b>Signed release APK</b> to share and sideload. <b>Split APKs</b> for the smallest download per device. <b>AAB</b> when you’re publishing to Google Play. You can rebuild in a different format anytime.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Do free apps really contain ads?<span class="pm">+</span></button>
+        <div class="faq-a"><p>Yes — a single bottom banner, injected by the converter. It’s what keeps the service free for everyone. Go Pro to remove it entirely, or plug in your own ad codes and keep 100% of the revenue yourself.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How do I turn the project into an installable APK?<span class="pm">+</span></button>
+        <div class="faq-a"><p>Download the generated .zip, push it to a GitHub repository, and the included GitHub Actions workflow compiles it automatically. Grab the finished APK or AAB from the Actions tab. No Android Studio needed.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can I publish on Google Play?<span class="pm">+</span></button>
+        <div class="faq-a"><p>Yes — choose the AAB format and upload it to Play Console. Review Google’s policy on WebView apps and complete the Data Safety declaration (including ads) before submitting.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Is my code uploaded anywhere?<span class="pm">+</span></button>
+        <div class="faq-a"><p>No. Packaging, unzipping and project generation all happen in your browser. Your HTML never touches our servers — only you push the final project to your own GitHub.</p></div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- FINAL CTA -->
 <div class="container">
   <div class="cta-final">
-    <h2>Turn your website into an APK today</h2>
-    <p>Free, fast and no code. Pick your format and download your Android project.</p>
-    <a class="btn btn-green" href="#builder" style="padding:16px 40px;font-size:17px">Create my app for free →</a>
+    <div class="brand-hero" style="font-size:clamp(30px,5vw,46px)">M<span class="m">🌓</span><span class="m m2">🌓</span>N</div>
+    <h2 style="font-size:clamp(22px,3vw,30px);margin:6px 0 10px">Your website deserves a home-screen icon</h2>
+    <p style="color:var(--muted);max-width:520px;margin:0 auto 24px">Join millions of creators. Paste your site, pick a format, and hold your APK in minutes.</p>
+    <a class="btn btn-green" style="padding:16px 40px;font-size:17px" href="#builder">Build my APK — free →</a>
   </div>
 </div>
 
+<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="foot-grid">
       <div>
-        <a class="logo brand" href="#" style="color:#fff;margin-bottom:12px"><span class="moon-mark"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="#fff" d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></span><span class="wordmark">M<i class="moon">🌓</i><i class="moon">🌓</i>N</span></a>
-        <p style="max-width:280px">Turn websites into Android apps — free, ad-supported, no code.</p>
+        <div class="foot-brand"><span class="moon-mark" style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#2a1e52,#0f1226);display:grid;place-items:center"><svg viewBox="0 0 24 24" width="14" height="14"><path fill="#fff" d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></span>M🌓🌓N Website to APK</div>
+        <p style="font-size:13.5px;max-width:300px">Turn any website into a real Android app — free, in minutes, straight from your browser. Free plan ad-supported; Pro removes the banner.</p>
       </div>
-      <div><h4>Product</h4><a href="#how">How it works</a><a href="#builder">App builder</a><a href="#monetization">Monetization</a><a href="#faq">FAQ</a></div>
-      <div><h4>Resources</h4><a href="#">Blog</a><a href="#">Publishing guide</a><a href="#">Help center</a></div>
-      <div><h4>Company</h4><a href="#">About</a><a href="#">Contact</a><a href="#">Terms</a><a href="#">Privacy</a></div>
+      <div>
+        <h4>Product</h4>
+        <a href="#builder">App builder</a>
+        <a href="#how">How it works</a>
+        <a href="#formats">Formats</a>
+        <a href="#monetization">Why it’s free</a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="#pro">Go Pro</a>
+        <a href="#faq">FAQ</a>
+        <a href="#" onclick="return false">Contact</a>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <a href="#" onclick="return false">Terms</a>
+        <a href="#" onclick="return false">Privacy</a>
+        <a href="admin.html">Owner login</a>
+      </div>
     </div>
     <div class="foot-bottom">
-      <span>© 2026 M🌓🌓N. All rights reserved.</span>
-      <span>Made for creators worldwide 🌍</span>
+      <span>© 2026 M🌓🌓N Website to APK. All rights reserved.</span>
+      <span>Made with 🌙 for creators everywhere</span>
     </div>
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="moon-config.js"></script>
 <script>
-/* =========================================================
-   PLATFORM CONFIG — edit these to run your own ad network
-   ========================================================= */
+/* ============================================================
+   M🌓🌓N Website to APK — builder engine
+   ============================================================ */
 
-/* ★ SITE OWNER — AD CONFIGURATION
-   These are the DEFAULTS. The admin panel (admin.html) generates
-   moon-config.js which overrides them live — prefer editing there.
-   ADS_PROVIDER = 'adsterra'  → works with a WEBSITE only — no published app
-   needed. 'admob' → native SDK ads, for once your app is on a store. */
-const PLATFORM = Object.assign({
+/* ---------- PLATFORM constants (moon-config.js overrides) ---------- */
+window.PLATFORM = {
   ADS_PROVIDER: 'adsterra',
-  ADSTERRA_BANNER_KEY:   'YOUR_BANNER_KEY',
-  ADSTERRA_POPUNDER_KEY: 'YOUR_POPUNDER_KEY',
-  ADMOB_APP_ID:  'ca-app-pub-3940256099942544~3347511713',
-  BANNER_UNIT:   'ca-app-pub-3940256099942544/6300978111',
-  INTER_UNIT:    'ca-app-pub-3940256099942544/1033173712',
-  APP_ADS_LINE:  'google.com, pub-3940256099942544, DIRECT, f08c47fec0942fa0'
-}, (typeof MOON_CONFIG!=='undefined' && MOON_CONFIG.ADS) || {});
-
-/* Site config (prices, wallets, contact) — defaults merged with moon-config.js */
-const CFG = Object.assign({
-  PRO_PRICE: 9, CURRENCY: '$', PRO_PERIOD: 'month',
-  OWNER_EMAIL: 'you@example.com',
-  PRO_NOTE: 'Pay, then email your receipt screenshot to the contact above — Pro is activated within 24 hours.',
-  WALLETS: [
-    {label:'Bitcoin (BTC)', value:''},
-    {label:'USDT (TRC-20)', value:''},
-    {label:'PayPal', value:''}
-  ]
-}, (typeof MOON_CONFIG!=='undefined') ? MOON_CONFIG : {});
-
-/* ================= STATE ================= */
-const COLORS = [
-  {name:'Blue',hex:'#1fa2ff'},{name:'Green',hex:'#16c76a'},{name:'Red',hex:'#ff5a5a'},
-  {name:'Pink',hex:'#ff7bac'},{name:'Purple',hex:'#8a6cff'},{name:'Orange',hex:'#ffa726'},
-  {name:'Beige',hex:'#d9b98f'},{name:'Grey',hex:'#9aa0a6'}
-];
-const state = {
-  source:'html', html:'', url:'', zipFiles:null,
-  appName:'My Awesome App', pkg:'', color:'#1fa2ff', colorName:'Blue',
-  plan:'free', ownBanner:'', ownInter:'', fmt:'debug', step:1, lastBlob:null
+  ADSTERRA_BANNER_KEY: 'YOUR_ADSTERRA_BANNER_KEY',
+  ADSTERRA_POPUNDER_KEY: '',
+  BANNER_SRC: '',
+  BANNER_W: 468,
+  BANNER_H: 60,
+  BANNER_UNIT: '',
+  INTER_UNIT: '',
+  ADMOB_APP_ID: '',
+  APP_ADS_LINE: ''
 };
 
-/* ================= STEP NAVIGATION ================= */
+/* ---------- STATE ---------- */
+const state = {
+  source: 'html',
+  html: '',
+  url: '',
+  zipFiles: null,
+  appName: 'My App',
+  color: '#16c76a',
+  colorName: 'Moon Green',
+  plan: 'free',
+  ownBanner: '',
+  ownInter: '',
+  fmt: 'debug',
+  lastBlob: null
+};
+
+const SWATCHES = [
+  { name: 'Moon Green', c: '#16c76a' },
+  { name: 'Deep Purple', c: '#6c5ce7' },
+  { name: 'Sky Blue', c: '#1fa2ff' },
+  { name: 'Sunset', c: '#ff7a45' },
+  { name: 'Rose', c: '#e84393' },
+  { name: 'Graphite', c: '#2d3436' }
+];
+
+function fmtName(){
+  return { debug: 'Debug APK (install & test)', release: 'Signed release APK',
+           split: 'Split APKs (one per CPU)', aab: 'Android App Bundle (Google Play)' }[state.fmt];
+}
+
+/* ---------- STEPS ---------- */
 function gotoStep(n){
-  if(n===2 && state.source==='html'){ state.html = document.getElementById('htmlInput').value.trim(); }
-  if(n===2 && state.source==='url'){ state.url = document.getElementById('urlInput').value.trim(); }
-  if(n===4){ renderSummary(); }
-  state.step = n;
-  document.querySelectorAll('.bstep').forEach(s=>s.classList.remove('active'));
-  document.getElementById('bstep'+n).classList.add('active');
-  for(let i=1;i<=4;i++){
-    const d=document.getElementById('dot'+i);
-    d.classList.toggle('active', i===n);
-    d.classList.toggle('done', i<n);
-    if(i<n) d.querySelector('.d').textContent='✓'; else d.querySelector('.d').textContent=i;
+  for(let i = 1; i <= 4; i++){
+    document.getElementById('bstep' + i).classList.toggle('active', i === n);
+    const d = document.getElementById('dot' + i);
+    d.classList.toggle('active', i === n);
+    d.classList.toggle('done', i < n);
   }
-  document.querySelector('.builder-shell').scrollIntoView({behavior:'smooth',block:'nearest'});
+  if(n === 4) renderSummary();
+  document.getElementById('builder').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-/* ================= SOURCE TABS ================= */
-document.querySelectorAll('#srcTabs button').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('#srcTabs button').forEach(b=>b.classList.remove('active'));
+/* ---------- SOURCE TABS ---------- */
+document.querySelectorAll('#srcTabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#srcTabs button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    state.source = btn.dataset.tab;
-    ['html','url','zip'].forEach(t=>document.getElementById('tab-'+t).style.display=(t===state.source)?'block':'none');
+    document.getElementById('tab-html').style.display = btn.dataset.tab === 'html' ? 'block' : 'none';
+    document.getElementById('tab-url').style.display = btn.dataset.tab === 'url' ? 'block' : 'none';
+    document.getElementById('tab-zip').style.display = btn.dataset.tab === 'zip' ? 'block' : 'none';
   });
 });
-
-/* ================= ZIP UPLOAD (real in-browser unzip) ================= */
-const CRC_TABLE=(()=>{const t=[];for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0;}return t;})();
-function crc32(u8){let c=0xFFFFFFFF;for(let i=0;i<u8.length;i++)c=CRC_TABLE[(c^u8[i])&0xFF]^(c>>>8);return (c^0xFFFFFFFF)>>>0;}
-
-async function unzip(file){
-  const buf=new Uint8Array(await file.arrayBuffer());
-  const dv=new DataView(buf.buffer, buf.byteOffset, buf.byteLength);
-  let eocd=-1;
-  for(let i=buf.length-22;i>=Math.max(0,buf.length-22-65536);i--){
-    if(dv.getUint32(i,true)===0x06054b50){eocd=i;break;}
+document.getElementById('htmlInput').addEventListener('input', e => { state.html = e.target.value; state.source = 'html'; });
+document.getElementById('urlInput').addEventListener('input', e => { state.url = e.target.value.trim(); state.source = 'url'; });
+document.getElementById('appNameInput').addEventListener('input', e => {
+  state.appName = e.target.value.slice(0, 20);
+  const pkg = document.getElementById('pkgInput');
+  if(!pkg.dataset.custom){
+    pkg.value = 'com.moon.' + (state.appName || 'myapp').toLowerCase().replace(/[^a-z0-9]+/g, '').slice(0, 16);
   }
-  if(eocd<0) throw new Error('Not a valid ZIP file');
-  const count=dv.getUint16(eocd+10,true);
-  let off=dv.getUint32(eocd+16,true);
-  const out={};
-  for(let n=0;n<count;n++){
-    if(dv.getUint32(off,true)!==0x02014b50) break;
-    const method=dv.getUint16(off+10,true);
-    const csize=dv.getUint32(off+20,true);
-    const nlen=dv.getUint16(off+28,true);
-    const elen=dv.getUint16(off+30,true);
-    const clen=dv.getUint16(off+32,true);
-    const lho=dv.getUint32(off+42,true);
-    const name=new TextDecoder().decode(buf.subarray(off+46,off+46+nlen));
-    const lnlen=dv.getUint16(lho+26,true);
-    const lelen=dv.getUint16(lho+28,true);
-    const dataStart=lho+30+lnlen+lelen;
-    const comp=buf.subarray(dataStart,dataStart+csize);
-    let data;
-    if(method===0){ data=comp.slice(); }
-    else if(method===8){
-      if(typeof DecompressionStream==='undefined') throw new Error('This browser cannot decompress ZIP files — try Chrome or Edge.');
-      const stream=new Blob([comp]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
-      data=new Uint8Array(await new Response(stream).arrayBuffer());
-    } else { off+=46+nlen+elen+clen; continue; }
-    if(!name.endsWith('/')) out[name]=data;
-    off+=46+nlen+elen+clen;
-  }
-  return out;
-}
+  updatePhone();
+});
 
-document.getElementById('zipInput').addEventListener('change', async e=>{
-  const f=e.target.files[0];
-  const st=document.getElementById('zipStatus');
+/* ---------- ZIP UPLOAD ---------- */
+document.getElementById('zipInput').addEventListener('change', async e => {
+  const f = e.target.files[0];
   if(!f) return;
-  st.textContent='Reading '+f.name+' …';
+  const st = document.getElementById('zipStatus');
+  st.textContent = 'Unzipping ' + f.name + '…';
   try{
-    state.zipFiles = await unzip(f);
-    const n=Object.keys(state.zipFiles).length;
-    st.innerHTML='✓ <b>'+n+' files</b> extracted in-browser and ready to package (including images & binaries).';
-  }catch(err){ st.textContent='⚠ '+err.message; state.zipFiles=null; }
-});
-
-/* ================= SWATCHES ================= */
-(function(){
-  const wrap=document.getElementById('swatches');
-  COLORS.forEach((c,i)=>{
-    const item=document.createElement('div'); item.className='sw-item';
-    const s=document.createElement('div');
-    s.className='swatch'+(i===0?' sel':'');
-    s.style.background=c.hex; s.title=c.name;
-    s.onclick=()=>{
-      wrap.querySelectorAll('.swatch').forEach(x=>x.classList.remove('sel'));
-      s.classList.add('sel');
-      state.color=c.hex; state.colorName=c.name; updatePhone();
-    };
-    item.appendChild(s);
-    const nm=document.createElement('div'); nm.className='swatch-name'; nm.textContent=c.name;
-    item.appendChild(nm);
-    wrap.appendChild(item);
-  });
-})();
-
-/* ================= PLAN ================= */
-function selectPlan(p){
-  state.plan=p;
-  document.getElementById('planFree').classList.toggle('sel', p==='free');
-  document.getElementById('planPro').classList.toggle('sel', p==='pro');
-  document.getElementById('ownAdsField').style.display = (p==='pro')?'block':'none';
-  document.getElementById('phoneAd').style.display = (p==='free' || (p==='pro' && (document.getElementById('ownBanner').value||document.getElementById('ownInter').value)))?'flex':'none';
-  updatePhone();
-}
-['ownBanner','ownInter'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{
-  if(state.plan==='pro') selectPlan('pro');
-}));
-
-/* ================= FORMAT ================= */
-const FMT_NAMES={debug:'APK (Debug — testing)',release:'APK (Release, signed)',split:'Split APKs (one per CPU)',aab:'AAB (Google Play bundle)'};
-function fmtName(){return FMT_NAMES[state.fmt];}
-function selectFmt(f){
-  state.fmt=f;
-  document.querySelectorAll('#fmtWrap .fmt').forEach(el=>el.classList.toggle('sel',el.dataset.fmt===f));
-}
-
-/* ================= PHONE PREVIEW ================= */
-function updatePhone(){
-  const v=document.getElementById('appNameInput').value.trim();
-  state.appName = v||'My Awesome App';
-  document.getElementById('phoneTitle').textContent=state.appName;
-  document.getElementById('phoneStatus').style.background=state.color;
-  document.getElementById('phoneHero').style.background='linear-gradient(135deg,'+state.color+',#14151a)';
-  document.getElementById('adPreviewNote').textContent =
-    state.plan==='free' ? 'Free plan: small banner at the bottom of every screen — that keeps the converter free'
-                        : 'Pro plan: no ads (or your own units only)';
-}
-document.getElementById('appNameInput').addEventListener('input', ()=>{
-  const p=document.getElementById('pkgInput');
-  if(!p.dataset.custom){
-    p.value = 'com.apkforge.'+state.appName.toLowerCase().replace(/[^a-z0-9]+/g,'').slice(0,20);
+    const z = await JSZip.loadAsync(f);
+    const files = {};
+    let n = 0;
+    const entries = Object.values(z.files).filter(x => !x.dir && !x.name.startsWith('__MACOSX') && !x.name.includes('..'));
+    for(const x of entries){
+      const ext = x.name.split('.').pop().toLowerCase();
+      const isText = ['html','htm','css','js','json','txt','md','svg','xml'].includes(ext);
+      files[x.name] = isText ? await x.async('string') : await x.async('uint8array');
+      n++;
+    }
+    state.zipFiles = files;
+    state.source = 'zip';
+    st.textContent = '✓ ' + n + ' files ready — they’ll be packaged into the APK as-is.';
+  }catch(err){
+    st.textContent = 'Could not read that ZIP: ' + err.message;
   }
-  updatePhone();
 });
+
+/* ---------- COLOR SWATCHES ---------- */
+const sw = document.getElementById('swatches');
+SWATCHES.forEach((s, i) => {
+  const d = document.createElement('div');
+  d.className = 'sw-item';
+  d.innerHTML = '<div class="swatch' + (i === 0 ? ' sel' : '') + '" style="background:' + s.c + '" data-c="' + s.c + '" data-n="' + s.name + '" onclick="pickColor(this)"></div><div class="swatch-name">' + s.name + '</div>';
+  sw.appendChild(d);
+});
+function pickColor(el){
+  document.querySelectorAll('.swatch').forEach(x => x.classList.remove('sel'));
+  el.classList.add('sel');
+  state.color = el.dataset.c;
+  state.colorName = el.dataset.n;
+  updatePhone();
+}
+
+/* ---------- PHONE PREVIEW ---------- */
+function updatePhone(){
+  const name = (state.appName || 'My App').trim() || 'My App';
+  document.querySelectorAll('.ph-appname').forEach(el => el.textContent = name);
+  document.querySelectorAll('.ph-hero,.ph-status').forEach(el => el.style.background = state.color);
+  document.querySelectorAll('.ph-num').forEach(el => el.style.color = state.color);
+}
 updatePhone();
 
-/* ================= ZIP WRITER (store method) ================= */
-function makeZip(files){
-  const enc=new TextEncoder(); const chunks=[]; const central=[]; let offset=0;
-  const now=new Date();
-  const dostime=((now.getHours()<<11)|(now.getMinutes()<<5)|(now.getSeconds()>>1))&0xffff;
-  const dosdate=((((now.getFullYear()-1980)&0x7f)<<9)|((now.getMonth()+1)<<5)|now.getDate())&0xffff;
-  for(const [name,val] of Object.entries(files)){
-    const data = typeof val==='string' ? enc.encode(val) : val;
-    const crc=crc32(data);
-    const nb=enc.encode(name);
-    const lh=new DataView(new ArrayBuffer(30));
-    lh.setUint32(0,0x04034b50,true); lh.setUint16(4,20,true); lh.setUint16(6,0,true);
-    lh.setUint16(8,0,true); lh.setUint16(10,dostime,true); lh.setUint16(12,dosdate,true);
-    lh.setUint32(14,crc,true); lh.setUint32(18,data.length,true); lh.setUint32(22,data.length,true);
-    lh.setUint16(26,nb.length,true); lh.setUint16(28,0,true);
-    chunks.push(new Uint8Array(lh.buffer), nb, data);
-    central.push({nb,crc,size:data.length,offset});
-    offset+=30+nb.length+data.length;
-  }
-  const cdStart=offset;
-  for(const c of central){
-    const ch=new DataView(new ArrayBuffer(46));
-    ch.setUint32(0,0x02014b50,true); ch.setUint16(4,20,true); ch.setUint16(6,20,true);
-    ch.setUint16(8,0,true); ch.setUint16(10,0,true); ch.setUint16(12,dostime,true); ch.setUint16(14,dosdate,true);
-    ch.setUint32(16,c.crc,true); ch.setUint32(20,c.size,true); ch.setUint32(24,c.size,true);
-    ch.setUint16(28,c.nb.length,true); ch.setUint16(30,0,true); ch.setUint16(32,0,true);
-    ch.setUint16(34,0,true); ch.setUint16(36,0,true); ch.setUint32(38,0,true); ch.setUint32(42,c.offset,true);
-    chunks.push(new Uint8Array(ch.buffer), c.nb);
-    offset+=46+c.nb.length;
-  }
-  const e=new DataView(new ArrayBuffer(22));
-  e.setUint32(0,0x06054b50,true); e.setUint16(8,central.length,true); e.setUint16(10,central.length,true);
-  e.setUint32(12,offset-cdStart,true); e.setUint32(16,cdStart,true);
-  chunks.push(new Uint8Array(e.buffer));
-  return new Blob(chunks,{type:'application/zip'});
+/* ---------- PLAN SELECT ---------- */
+function selectPlan(p){
+  state.plan = p;
+  document.getElementById('planFree').classList.toggle('sel', p === 'free');
+  document.getElementById('planPro').classList.toggle('sel', p === 'pro');
+  document.getElementById('ownAdsBox').style.display = p === 'pro' ? 'block' : 'none';
+}
+function toggleOwnAds(){
+  const on = document.getElementById('ownAdsChk').checked;
+  document.getElementById('ownAdsFields').style.display = on ? 'block' : 'none';
+  if(!on){ state.ownBanner = ''; state.ownInter = ''; document.getElementById('ownBannerInput').value = ''; document.getElementById('ownInterInput').value = ''; }
 }
 
-/* ================= ADSTERRA INJECTION ================= */
-function injectAdsterra(html, bannerKey, popKey){
-  const banner = bannerKey ? `<div id="mn-ad" style="position:fixed;left:0;right:0;bottom:0;width:100%;height:50px;z-index:2147483647;background:#ffffff;text-align:center;overflow:hidden">
-<script type="text/javascript">atOptions={'key':'${bannerKey}','format':'iframe','height':50,'width':320,'params':{}};<\/script>
-<script type="text/javascript" src="https://www.highperformanceformat.com/${bannerKey}/invoke.js"><\/script>
-</div>` : '';
-  const pop = popKey ? `<script type="text/javascript" src="https://pl25539530.profitablecpmrate.com/${popKey}/loader.js" async><\/script>` : '';
-  const snippet = `\n<!-- M🌓🌓N ad support (funds the free converter) -->\n${banner}\n${pop}\n`;
-  if(/<\/body>/i.test(html)) return html.replace(/<\/body>/i, snippet+'</body>');
+/* ---------- FORMAT SELECT ---------- */
+document.querySelectorAll('#fmtGrid .fmt').forEach(f => {
+  f.addEventListener('click', () => {
+    document.querySelectorAll('#fmtGrid .fmt').forEach(x => x.classList.remove('sel'));
+    f.classList.add('sel');
+    state.fmt = f.dataset.fmt;
+    renderSummary();
+  });
+});
+
+/* ================= ZIP WRITER (store method) ================= */
+const CRC_T = (() => {
+  const t = new Uint32Array(256);
+  for(let n = 0; n < 256; n++){
+    let c = n;
+    for(let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1;
+    t[n] = c >>> 0;
+  }
+  return t;
+})();
+function crc32(u8){
+  let c = 0xFFFFFFFF;
+  for(let i = 0; i < u8.length; i++) c = CRC_T[(c ^ u8[i]) & 0xFF] ^ (c >>> 8);
+  return (c ^ 0xFFFFFFFF) >>> 0;
+}
+function makeZip(files){
+  const enc = new TextEncoder(); const chunks = []; const central = []; let offset = 0;
+  const now = new Date();
+  const dostime = ((now.getHours() << 11) | (now.getMinutes() << 5) | (now.getSeconds() >> 1)) & 0xffff;
+  const dosdate = ((((now.getFullYear() - 1980) & 0x7f) << 9) | ((now.getMonth() + 1) << 5) | now.getDate()) & 0xffff;
+  for(const [name, val] of Object.entries(files)){
+    const data = typeof val === 'string' ? enc.encode(val) : val;
+    const crc = crc32(data);
+    const nb = enc.encode(name);
+    const lh = new DataView(new ArrayBuffer(30));
+    lh.setUint32(0, 0x04034b50, true); lh.setUint16(4, 20, true); lh.setUint16(6, 0, true);
+    lh.setUint16(8, 0, true); lh.setUint16(10, dostime, true); lh.setUint16(12, dosdate, true);
+    lh.setUint32(14, crc, true); lh.setUint32(18, data.length, true); lh.setUint32(22, data.length, true);
+    lh.setUint16(26, nb.length, true); lh.setUint16(28, 0, true);
+    chunks.push(new Uint8Array(lh.buffer), nb, data);
+    central.push({ nb, crc, size: data.length, offset });
+    offset += 30 + nb.length + data.length;
+  }
+  const cdStart = offset;
+  for(const c of central){
+    const ch = new DataView(new ArrayBuffer(46));
+    ch.setUint32(0, 0x02014b50, true); ch.setUint16(4, 20, true); ch.setUint16(6, 20, true);
+    ch.setUint16(8, 0, true); ch.setUint16(10, 0, true); ch.setUint16(12, dostime, true); ch.setUint16(14, dosdate, true);
+    ch.setUint32(16, c.crc, true); ch.setUint32(20, c.size, true); ch.setUint32(24, c.size, true);
+    ch.setUint16(28, c.nb.length, true); ch.setUint16(30, 0, true); ch.setUint16(32, 0, true);
+    ch.setUint16(34, 0, true); ch.setUint16(36, 0, true); ch.setUint32(38, 0, true); ch.setUint32(42, c.offset, true);
+    chunks.push(new Uint8Array(ch.buffer), c.nb);
+    offset += 46 + c.nb.length;
+  }
+  const e = new DataView(new ArrayBuffer(22));
+  e.setUint32(0, 0x06054b50, true); e.setUint16(8, central.length, true); e.setUint16(10, central.length, true);
+  e.setUint32(12, offset - cdStart, true); e.setUint32(16, cdStart, true);
+  chunks.push(new Uint8Array(e.buffer));
+  return new Blob(chunks, { type: 'application/zip' });
+}
+
+/* ================= AD INJECTION (owner units — funds the free plan) ================= */
+function invokeSrcFor(key){
+  return PLATFORM.BANNER_SRC || ('https://www.highperformanceformat.com/' + key + '/invoke.js');
+}
+function injectAds(html, bannerKey, popUrl){
+  const banner = bannerKey
+    ? '<div id="mn-ad" style="position:fixed;left:0;right:0;bottom:0;width:100%;height:50px;z-index:2147483647;background:#ffffff;text-align:center;overflow:hidden">'
+      + '<script type="text/javascript">atOptions = {\'key\':\'' + bannerKey + '\',\'format\':\'iframe\',\'height\':50,\'width\':320,\'params\':{}};<\/script>'
+      + '<script type="text/javascript" src="' + invokeSrcFor(bannerKey) + '"><\/script>'
+      + '</div>'
+    : '';
+  const pop = popUrl ? '<script type="text/javascript" src="' + popUrl + '" async><\/script>' : '';
+  const snippet = '\n<!-- M🌓🌓N — free-plan ad support -->\n' + banner + '\n' + pop + '\n';
+  if(/<\/body>/i.test(html)) return html.replace(/<\/body>/i, snippet + '</body>');
   return html + snippet;
 }
 
 /* ================= PROJECT GENERATOR ================= */
 function pkgName(){
-  const p=document.getElementById('pkgInput').value.trim();
-  return /^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$/.test(p) ? p : 'com.apkforge.app'+Math.floor(Math.random()*1e6);
+  const p = document.getElementById('pkgInput').value.trim();
+  return /^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$/.test(p) ? p : 'com.moon.app' + Math.floor(Math.random() * 1e6);
 }
-function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function esc(s){ return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 
 function generateProject(){
-  const pkg=pkgName();
-  const fmtKey={debug:'debug-apk',release:'release-apk',split:'split-apk',aab:'aab'}[state.fmt];
+  const pkg = pkgName();
+  const fmtKey = { debug: 'debug-apk', release: 'release-apk', split: 'split-apk', aab: 'aab' }[state.fmt];
   const provider = PLATFORM.ADS_PROVIDER;
-  const admob = provider==='admob';
-  const useBanner = admob && (state.plan==='free' || !!state.ownBanner);
-  const useInter  = admob && (state.plan==='free' || !!state.ownInter);
-  const adsOn = useBanner||useInter;
-  const adsterraAds = !admob && (state.plan==='free' || !!(state.ownBanner||state.ownInter));
-  const bk = state.plan==='free' ? PLATFORM.ADSTERRA_BANNER_KEY   : state.ownBanner;
-  const pk = state.plan==='free' ? PLATFORM.ADSTERRA_POPUNDER_KEY : state.ownInter;
-  const bkReal = bk && !/^YOUR_/.test(bk) ? bk : '';   // placeholders inject nothing
+  const admob = provider === 'admob';
+  const useBanner = admob && (state.plan === 'free' || !!state.ownBanner);
+  const useInter  = admob && (state.plan === 'free' || !!state.ownInter);
+  const adsOn = useBanner || useInter;
+  const webAds = !admob && (state.plan === 'free' || !!(state.ownBanner || state.ownInter));
+  const bk = state.plan === 'free' ? PLATFORM.ADSTERRA_BANNER_KEY : state.ownBanner;
+  const pk = state.plan === 'free' ? PLATFORM.ADSTERRA_POPUNDER_KEY : state.ownInter;
+  const bkReal = bk && !/^YOUR_/.test(bk) ? bk : '';
   const pkReal = pk && !/^YOUR_/.test(pk) ? pk : '';
-  const bannerUnit = state.plan==='free' ? PLATFORM.BANNER_UNIT : (state.ownBanner||'');
-  const interUnit  = state.plan==='free' ? PLATFORM.INTER_UNIT  : (state.ownInter||'');
-  const appId      = state.plan==='free' ? PLATFORM.ADMOB_APP_ID : (state.ownBanner||state.ownInter) ? 'ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX' : '';
-  const loadUrl = state.source==='url' ? state.url : 'file:///android_asset/www/index.html';
-  const F={};
+  const bannerUnit = state.plan === 'free' ? PLATFORM.BANNER_UNIT : (state.ownBanner || '');
+  const interUnit  = state.plan === 'free' ? PLATFORM.INTER_UNIT  : (state.ownInter || '');
+  const appId      = state.plan === 'free' ? PLATFORM.ADMOB_APP_ID : (state.ownBanner || state.ownInter) ? 'ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX' : '';
+  const loadUrl = state.source === 'url' ? state.url : 'file:///android_asset/www/index.html';
+  const F = {};
 
   /* --- Gradle project --- */
-  F['settings.gradle']=`
+  F['settings.gradle'] = `
 pluginManagement { repositories { google(); mavenCentral(); gradlePluginPortal() } }
 dependencyResolutionManagement { repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS); repositories { google(); mavenCentral() } }
-rootProject.name = "${state.appName.replace(/"/g,'')}"
+rootProject.name = "${state.appName.replace(/"/g, '')}"
 include ':app'
 `.trim();
 
-  F['build.gradle']=`
+  F['build.gradle'] = `
 plugins { id 'com.android.application' version '8.5.2' apply false }
 `.trim();
 
-  F['app/build.gradle']=`
+  F['app/build.gradle'] = `
 plugins { id 'com.android.application' }
 
 android {
@@ -954,7 +961,7 @@ android {
             signingConfig signingConfigs.release
         }
     }
-${state.fmt==='split' ? `    splits {
+${state.fmt === 'split' ? `    splits {
         abi {
             enable true
             reset()
@@ -969,16 +976,16 @@ dependencies {
 ${adsOn ? "    implementation 'com.google.android.gms:play-services-ads:23.6.0'\n" : ""}}
 `.trim();
 
-  F['gradle.properties']=`
+  F['gradle.properties'] = `
 org.gradle.jvmargs=-Xmx2048m
 android.useAndroidX=true
-# ---- Ad configuration (source of truth: PLATFORM constants in the M🌓🌓N builder script) ----
+# ---- Ad configuration (source of truth: PLATFORM constants, set by moon-config.js) ----
 ADS_PROVIDER=${provider}
-${provider==='admob' ? `ADMOB_APP_ID=${appId||'none'}` : `# Adsterra keys are injected directly into the app's HTML at build time`}
+${provider === 'admob' ? `ADMOB_APP_ID=${appId || 'none'}` : `# Web ad codes are injected directly into the app's HTML at build time`}
 `.trim();
 
   /* --- Manifest --- */
-  F['app/src/main/AndroidManifest.xml']=`
+  F['app/src/main/AndroidManifest.xml'] = `
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
@@ -991,8 +998,8 @@ ${provider==='admob' ? `ADMOB_APP_ID=${appId||'none'}` : `# Adsterra keys are in
 ${adsOn ? `        <!-- AdMob App ID — injected by M🌓🌓N monetization system -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="${appId}" />\n` : ''}
-        <activity
+            android:value="${appId}" />
+` : ''}        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:configChanges="orientation|screenSize|keyboardHidden">
@@ -1006,23 +1013,24 @@ ${adsOn ? `        <!-- AdMob App ID — injected by M🌓🌓N monetization sys
 `.trim();
 
   /* --- MainActivity --- */
+  const inv = bkReal ? invokeSrcFor(bkReal) : '';
   const adJs = [
     "(function(){",
     "if(document.getElementById('mn-ad')||!document.body)return;",
     "var d=document.createElement('div');d.id='mn-ad';",
     "d.style.cssText='position:fixed;left:0;right:0;bottom:0;height:50px;z-index:2147483647;background:#fff;text-align:center;overflow:hidden';",
     "document.body.appendChild(d);",
-    bkReal ? "var o=document.createElement('script');o.textContent=\"atOptions={'key':'"+bkReal+"','format':'iframe','height':50,'width':320,'params':{}};\";document.body.appendChild(o);" : '',
-    bkReal ? "var i=document.createElement('script');i.src='https://www.highperformanceformat.com/"+bkReal+"/invoke.js';i.async=true;document.body.appendChild(i);" : '',
-    pkReal ? "var p=document.createElement('script');p.src='https://pl25539530.profitablecpmrate.com/"+pkReal+"/loader.js';p.async=true;document.body.appendChild(p);" : '',
+    bkReal ? "var o=document.createElement('script');o.textContent=\"atOptions = {'key':'" + bkReal + "','format':'iframe','height':50,'width':320,'params':{}};\";document.body.appendChild(o);" : '',
+    bkReal ? "var i=document.createElement('script');i.src='" + inv + "';i.async=true;document.body.appendChild(i);" : '',
+    pkReal ? "var p=document.createElement('script');p.src='" + pkReal + "';p.async=true;document.body.appendChild(p);" : '',
     "})();"
   ].filter(Boolean).join('\n');
-  const adJsField = (provider==='adsterra' && state.source==='url' && adsterraAds) ? `
+  const adJsField = (webAds && state.source === 'url') ? `
     private static final String AD_JS = """
-${adJs.split('\n').map(l=>'            '+l).join('\n')}
+${adJs.split('\n').map(l => '            ' + l).join('\n')}
             """;
 ` : '';
-  F['app/src/main/java/'+pkg.replace(/\./g,'/')+'/MainActivity.java']=`
+  F['app/src/main/java/' + pkg.replace(/\./g, '/') + '/MainActivity.java'] = `
 package ${pkg};
 
 import android.os.Bundle;
@@ -1039,11 +1047,11 @@ ${adJsField}${useBanner ? '    private AdView adView;\n' : ''}${useInter ? '    
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 ${useInter ? `
-        // ===== M🌓🌓N Monetization: init AdMob =====
+        // ===== M🌓🌓N: init AdMob =====
         MobileAds.initialize(this, initializationStatus -> { });
         loadInterstitial();
 ` : ''}${useBanner ? `
-        // ===== M🌓🌓N Monetization: banner =====
+        // ===== M🌓🌓N: banner =====
         adView = findViewById(R.id.adView);
         adView.loadAd(new AdRequest.Builder().build());
 ` : ''}
@@ -1051,13 +1059,13 @@ ${useInter ? `
         WebSettings ws = webView.getSettings();
         ws.setJavaScriptEnabled(true);
         ws.setDomStorageEnabled(true);
-${provider==='adsterra' && state.source==='url' && adsterraAds ? `        webView.setWebViewClient(new WebViewClient() {
+${webAds && state.source === 'url' ? `        webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 view.evaluateJavascript(AD_JS, null);
             }
-        });` : `        webView.setWebViewClient(new WebViewClient());`}
+        });` : '        webView.setWebViewClient(new WebViewClient());'}
         webView.loadUrl("${loadUrl}");
     }
 ${useInter ? `
@@ -1089,7 +1097,7 @@ ${useBanner ? `
 `.trim();
 
   /* --- Layout --- */
-  F['app/src/main/res/layout/activity_main.xml']=`
+  F['app/src/main/res/layout/activity_main.xml'] = `
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
@@ -1102,7 +1110,7 @@ ${useBanner ? `
         android:layout_height="0dp"
         android:layout_weight="1" />
 ${useBanner ? `
-    <!-- M🌓🌓N Monetization: pinned banner -->
+    <!-- M🌓🌓N: pinned banner -->
     <com.google.android.gms.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
@@ -1114,14 +1122,14 @@ ${useBanner ? `
 `.trim();
 
   /* --- Resources --- */
-  F['app/src/main/res/values/strings.xml']=`
+  F['app/src/main/res/values/strings.xml'] = `
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">${esc(state.appName)}</string>
 </resources>
 `.trim();
 
-  F['app/src/main/res/values/colors.xml']=`
+  F['app/src/main/res/values/colors.xml'] = `
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="theme">${state.color}</color>
@@ -1129,7 +1137,7 @@ ${useBanner ? `
 </resources>
 `.trim();
 
-  F['app/src/main/res/values/themes.xml']=`
+  F['app/src/main/res/values/themes.xml'] = `
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.App" parent="Theme.AppCompat.DayNight.NoActionBar">
@@ -1139,7 +1147,7 @@ ${useBanner ? `
 </resources>
 `.trim();
 
-  F['app/src/main/res/drawable/ic_launcher_foreground.xml']=`
+  F['app/src/main/res/drawable/ic_launcher_foreground.xml'] = `
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp" android:height="108dp"
@@ -1148,7 +1156,7 @@ ${useBanner ? `
 </vector>
 `.trim();
 
-  F['app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml']=`
+  F['app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml'] = `
 <?xml version="1.0" encoding="utf-8"?>
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
     <background android:drawable="@color/ic_launcher_background" />
@@ -1156,41 +1164,41 @@ ${useBanner ? `
 </adaptive-icon>
 `.trim();
 
-  F['app/src/main/res/mipmap/ic_launcher.xml']=F['app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml'];
+  F['app/src/main/res/mipmap/ic_launcher.xml'] = F['app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml'];
 
   /* --- Web content --- */
-  if(state.source==='html'){
-    F['app/src/main/assets/www/index.html']= state.html || '<!DOCTYPE html><html><body style="font-family:sans-serif;display:grid;place-items:center;height:100vh"><h1>Hello from your APK! 🎉</h1></body></html>';
-  } else if(state.source==='url'){
-    F['app/src/main/assets/www/index.html']=`
+  if(state.source === 'html'){
+    F['app/src/main/assets/www/index.html'] = state.html || '<!DOCTYPE html><html><body style="font-family:sans-serif;display:grid;place-items:center;height:100vh"><h1>Hello from your APK! 🎉</h1></body></html>';
+  } else if(state.source === 'url'){
+    F['app/src/main/assets/www/index.html'] = `
 <!DOCTYPE html><html><head><meta charset="utf-8"><title>${esc(state.appName)}</title>
 <style>body{font-family:sans-serif;display:grid;place-items:center;height:100vh;background:#f7f8fa;color:#14151a}</style></head>
 <body><div style="text-align:center"><h2>🌐</h2><p>Loading <b>${esc(state.url)}</b>…</p></div>
 <script>location.replace(${JSON.stringify(state.url)});<\/script></body></html>`.trim();
   } else if(state.zipFiles){
-    for(const [name,data] of Object.entries(state.zipFiles)){
+    for(const [name, data] of Object.entries(state.zipFiles)){
       if(name.includes('..')) continue;
-      F['app/src/main/assets/www/'+name]=data;
+      F['app/src/main/assets/www/' + name] = data;
     }
     if(!F['app/src/main/assets/www/index.html']){
-      F['app/src/main/assets/www/index.html']='<!DOCTYPE html><html><body><h1>Missing index.html</h1><p>Your ZIP must contain index.html at its root.</p></body></html>';
+      F['app/src/main/assets/www/index.html'] = '<!DOCTYPE html><html><body><h1>Missing index.html</h1><p>Your ZIP must contain index.html at its root.</p></body></html>';
     }
   }
 
-  /* --- Adsterra: inject ad codes into every HTML page --- */
-  if(adsterraAds){
+  /* --- Inject owner ad codes into every HTML page of free / own-ads apps --- */
+  if(webAds){
     for(const p of Object.keys(F)){
-      if(p.endsWith('.html') && typeof F[p]==='string'){ F[p]=injectAdsterra(F[p], bkReal, pkReal); }
+      if(p.endsWith('.html') && typeof F[p] === 'string'){ F[p] = injectAds(F[p], bkReal, pkReal); }
     }
   }
 
   /* --- app-ads.txt (AdMob provider only) --- */
-  if(admob && state.plan==='free'){
-    F['app-ads.txt']=PLATFORM.APP_ADS_LINE+'\n';
+  if(admob && state.plan === 'free'){
+    F['app-ads.txt'] = PLATFORM.APP_ADS_LINE + '\n';
   }
 
   /* --- CI workflow: real APK compilation --- */
-  F['.github/workflows/build-apk.yml']=`
+  F['.github/workflows/build-apk.yml'] = `
 name: Build app package
 on:
   push:
@@ -1215,7 +1223,7 @@ jobs:
       - name: Build selected format
         run: |
           FORMAT="\${{ github.event.inputs.format || '${fmtKey}' }}"
-          case "$FORMAT" in
+          case "\$FORMAT" in
             debug-apk)   gradle assembleDebug ;;
             release-apk) gradle assembleRelease ;;
             split-apk)   gradle assembleRelease ;;
@@ -1223,33 +1231,33 @@ jobs:
           esac
       - uses: actions/upload-artifact@v4
         with:
-          name: ${state.appName.replace(/[^a-z0-9]+/gi,'-').toLowerCase()}-\${{ github.event.inputs.format || '${fmtKey}' }}
+          name: ${state.appName.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}-\${{ github.event.inputs.format || '${fmtKey}' }}
           path: |
             app/build/outputs/apk/**/*.apk
             app/build/outputs/bundle/**/*.aab
 `.trim();
 
   /* --- README --- */
-  F['README.md']=`
-# ${state.appName} — Android app generated by M🌓🌓N
+  F['README.md'] = `
+# ${state.appName} — generated by M🌓🌓N Website to APK
 
 Package: \`${pkg}\`
 Theme: ${state.colorName} (${state.color})
-Plan: ${state.plan.toUpperCase()}${state.plan==='free' ? ' — ad-supported (banner + exit interstitial fund the free service)' : ''}
+Format: ${fmtName()}
+Plan: ${state.plan.toUpperCase()}${state.plan === 'free' ? ' — ad-supported (one small bottom banner funds the free converter)' : ''}
 
 ## What's inside
 - \`app/src/main/java/…/MainActivity.java\` — WebView shell${adsOn ? ' with AdMob monetization' : ''}
 - \`app/src/main/assets/www/\` — your web content (${state.source.toUpperCase()} source)
-- \`app/src/main/AndroidManifest.xml\` — permissions +${adsOn ? ' AdMob App ID +' : ''} launcher config
-${state.plan==='free' ? '- \`app-ads.txt\` — seller authorization for the platform ad account\n' : ''}
+- \`app/src/main/AndroidManifest.xml\` — permissions + launcher config
 - \`.github/workflows/build-apk.yml\` — one-click APK compilation
 
-## Get your real app package (no Android Studio needed)
+## Get your app package (no Android Studio needed)
 Selected format: **${fmtName()}**
 1. Push this project to GitHub (or upload the ZIP via the web UI).
 2. GitHub Actions compiles automatically → open the **Actions** tab → download the artifact:
-   - **APK (debug)** → \`apk/debug/app-debug.apk\` — install straight on your device
-   - **APK (release)** → signed APK, ready to share or sideload anywhere
+   - **Debug APK** → \`apk/debug/app-debug.apk\` — install straight on your device
+   - **Release APK** → signed APK, ready to share or sideload anywhere
    - **Split APKs** → one optimized APK per CPU (arm64-v8a, armeabi-v7a, x86_64)
    - **AAB** → \`bundle/release/app-release.aab\` → upload directly to Google Play
 3. Want a different format later? Actions → **Run workflow** and pick it.
@@ -1260,23 +1268,16 @@ Open the project in Android Studio and press ▶ Run, or:
 gradle installDebug   # with USB debugging enabled
 \`\`\`
 
-## Ads configuration (${provider==='adsterra' ? 'Adsterra web codes injected into the app HTML' : 'native AdMob SDK integration'} — ${state.plan==='free' ? 'funds the free service, revenue goes to the site owner' : 'your own'})
-${state.plan==='free'
-  ? (provider==='adsterra'
-     ? `This app is on the FREE plan and is ad-supported: a small pinned banner and occasional popunder/social-bar ads keep the M🌓🌓N converter free for everyone.\n- Banner key: \`${bk}\`\n- Popunder/social-bar key: \`${pk}\`\n\n> Site owner: set your Adsterra keys in the PLATFORM constants at the top of the builder script — all free-plan ad revenue goes to you.`
-     : `This app is on the FREE plan and is ad-supported: a small banner and an occasional exit interstitial keep the M🌓🌓N converter free for everyone.\n- Banner: \`${bannerUnit}\`\n- Interstitial: \`${interUnit}\` (every 2nd app exit)\n\n> Site owner: replace the TEST IDs above with YOUR OWN AdMob App ID and ad units — see the PLATFORM constants at the top of the builder script — all free-plan ad revenue goes to you.\n\nVerify TEST IDs: https://developers.google.com/admob/android/test-ads`)
-  : (provider==='adsterra'
-     ? ((bk||pk) ? `Own ad codes injected:\n- Banner key: \`${bk}\`\n- Popunder key: \`${pk}\`\n100% of revenue is yours.` : 'No ads in this app.')
+## Ads configuration
+${state.plan === 'free'
+  ? (provider === 'adsterra'
+     ? `This FREE app is ad-supported: a small pinned bottom banner (and occasional popunder) keeps the M🌓🌓N converter free for everyone.\n- Banner key: \`${bk}\`\n- Popunder URL: \`${pk || 'none'}\``
+     : `This FREE app is ad-supported: a small banner and an occasional exit interstitial keep the M🌓🌓N converter free for everyone.\n- Banner: \`${bannerUnit}\`\n- Interstitial: \`${interUnit}\``)
+  : (webAds
+     ? ((bk || pk) ? `Own ad codes injected:\n- Banner key: \`${bk}\`\n- Popunder URL: \`${pk || 'none'}\`\n100% of revenue is yours.` : 'No ads in this app.')
      : (adsOn
-        ? `Own ad units compiled in:\n- Banner: \`${bannerUnit}\`\n- Interstitial: \`${interUnit}\`\n100% of revenue is yours.`
+        ? `Own AdMob units compiled in:\n- Banner: \`${bannerUnit}\`\n- Interstitial: \`${interUnit}\`\n100% of revenue is yours.`
         : 'No ads compiled into this app.'))}
-
-## Self-hosted instant build (optional)
-Point the web builder at your own build server to compile APKs on demand:
-\`\`\`js
-window.MOON_BUILD_URL = 'https://your-server.example.com/build';
-// The builder POSTs a JSON config and downloads the compiled .apk directly.
-\`\`\`
 
 ## Publish on Google Play
 \`\`\`bash
@@ -1286,52 +1287,52 @@ Then upload the .aab to Play Console. Review Google Play policy on WebView apps
 and declare ads in the Data Safety section before submitting.
 `.trim();
 
-  return {files:F, pkg};
+  return { files: F, pkg };
 }
 
 /* ================= BUILD FLOW ================= */
 function renderSummary(){
-  const n = state.zipFiles ? Object.keys(state.zipFiles).length+' files (ZIP)' : state.source.toUpperCase();
-  document.getElementById('buildSummary').innerHTML=
-    '<b>App:</b> '+esc(state.appName)+' &nbsp;·&nbsp; <b>Package:</b> '+pkgName()+
-    '<br><b>Source:</b> '+esc(n)+' &nbsp;·&nbsp; <b>Theme:</b> '+state.colorName+
-    '<br><b>Format:</b> '+fmtName()+
-    '<br><b>Ads:</b> '+(state.plan==='free'
-      ? 'Ad-supported — banner + popunder (funds the free service)'
-      : (state.ownBanner||state.ownInter) ? 'Your own ad units (100% revenue)' : 'No ads');
+  const n = state.zipFiles ? Object.keys(state.zipFiles).length + ' files (ZIP)' : state.source.toUpperCase();
+  document.getElementById('buildSummary').innerHTML =
+    '<b>App:</b> ' + esc(state.appName || 'My App') + ' &nbsp;·&nbsp; <b>Package:</b> ' + pkgName() +
+    '<br><b>Source:</b> ' + esc(n) + ' &nbsp;·&nbsp; <b>Theme:</b> ' + state.colorName +
+    '<br><b>Format:</b> ' + fmtName() +
+    '<br><b>Plan:</b> ' + (state.plan === 'free'
+      ? 'Free — one small bottom banner funds the converter'
+      : (state.ownBanner || state.ownInter) ? 'Pro — your own ad codes (100% revenue yours)' : 'Pro — no ads');
 }
 
-const BUILD_STEPS=['Reading source files…','Unzipping & validating assets…','Generating AndroidManifest.xml…','Injecting ad-support code…','Writing WebView shell (MainActivity.java)…','Building adaptive icon & theme…','Packaging Gradle project…','Signing ZIP container…'];
-let lastResult=null;
+const BUILD_STEPS = ['Reading source files…','Unzipping & validating assets…','Generating AndroidManifest.xml…','Injecting ad-support code…','Writing WebView shell (MainActivity.java)…','Building adaptive icon & theme…','Packaging Gradle project…','Signing ZIP container…'];
+let lastResult = null;
 
 async function startBuild(){
-  const btn=document.getElementById('buildBtn');
-  btn.disabled=true; btn.textContent='⏳ Generating…';
-  document.getElementById('progressWrap').style.display='block';
-  document.getElementById('donePanel').style.display='none';
-  const bar=document.getElementById('progressBar');
-  const lbl=document.getElementById('progressLabel');
-  for(let i=0;i<BUILD_STEPS.length;i++){
-    lbl.textContent=BUILD_STEPS[i];
-    bar.style.width=Math.round(((i+1)/BUILD_STEPS.length)*100)+'%';
-    await new Promise(r=>setTimeout(r,180+Math.random()*220));
+  const btn = document.getElementById('buildBtn');
+  btn.disabled = true; btn.textContent = '⏳ Generating…';
+  document.getElementById('progressWrap').style.display = 'block';
+  document.getElementById('donePanel').style.display = 'none';
+  const bar = document.getElementById('progressBar');
+  const lbl = document.getElementById('progressLabel');
+  for(let i = 0; i < BUILD_STEPS.length; i++){
+    lbl.textContent = BUILD_STEPS[i];
+    bar.style.width = Math.round(((i + 1) / BUILD_STEPS.length) * 100) + '%';
+    await new Promise(r => setTimeout(r, 180 + Math.random() * 220));
   }
-  lastResult=generateProject();
-  state.lastBlob=makeZip(lastResult.files);
-  lbl.textContent='✅ Done! '+Object.keys(lastResult.files).length+' files packaged.';
-  btn.disabled=false; btn.textContent='⚙ Generate Android project (.zip)';
-  document.getElementById('donePanel').style.display='block';
+  lastResult = generateProject();
+  state.lastBlob = makeZip(lastResult.files);
+  lbl.textContent = '✅ Done! ' + Object.keys(lastResult.files).length + ' files packaged.';
+  btn.disabled = false; btn.textContent = '⚙ Generate Android project (.zip)';
+  document.getElementById('donePanel').style.display = 'block';
   downloadProject();
-  // Optional: instant server-side APK build
+  /* Optional: instant server-side APK build */
   if(window.MOON_BUILD_URL){
     try{
-      const res=await fetch(window.MOON_BUILD_URL,{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({name:state.appName,pkg:lastResult.pkg,plan:state.plan,color:state.color,source:state.source})});
+      const res = await fetch(window.MOON_BUILD_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: state.appName, pkg: lastResult.pkg, plan: state.plan, color: state.color, source: state.source }) });
       if(res.ok){
-        const apk=await res.blob();
-        const a=document.createElement('a');
-        a.href=URL.createObjectURL(apk);
-        a.download=state.appName.replace(/[^a-z0-9]+/gi,'-').toLowerCase()+'.apk';
+        const apk = await res.blob();
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(apk);
+        a.download = state.appName.replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '.apk';
         a.click();
       }
     }catch(e){/* server offline — project zip already downloaded */}
@@ -1340,22 +1341,23 @@ async function startBuild(){
 
 function downloadProject(){
   if(!state.lastBlob) return;
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(state.lastBlob);
-  a.download=state.appName.replace(/[^a-z0-9]+/gi,'-').toLowerCase()+'-android-project.zip';
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(state.lastBlob);
+  a.download = (state.appName || 'myapp').replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '-android-project.zip';
   a.click();
 }
 
-/* ================= LIVE CONFIG (from admin panel / moon-config.js) ================= */
+/* ================= LIVE CONFIG (moon-config.js) ================= */
 function applyConfig(){
-  document.querySelectorAll('[data-cfg-price]').forEach(el=>{
-    el.textContent = CFG.CURRENCY + CFG.PRO_PRICE + (el.dataset.cfgPrice==='per' ? '/'+CFG.PRO_PERIOD : '');
+  if(!window.CFG) return;
+  document.querySelectorAll('[data-cfg-price]').forEach(el => {
+    el.textContent = CFG.CURRENCY + CFG.PRO_PRICE + (el.dataset.cfgPrice === 'per' ? '/' + CFG.PRO_PERIOD : '');
   });
   const wl = document.getElementById('walletList');
   if(wl){
-    const items = (CFG.WALLETS||[]).filter(w => w.value && w.value.trim());
+    const items = (CFG.WALLETS || []).filter(w => w.value && w.value.trim());
     wl.innerHTML = items.length ? items.map(w =>
-      '<li><span class="wlabel">'+esc(w.label)+'</span><code class="wval" title="Tap to copy" onclick="navigator.clipboard&&navigator.clipboard.writeText(this.textContent);this.textContent=\'Copied ✓\';var t=this;setTimeout(function(){t.textContent=t.dataset.v},900)" data-v="'+esc(w.value)+'">'+esc(w.value)+'</code></li>'
+      '<li><span class="wlabel">' + esc(w.label) + '</span><code class="wval" title="Tap to copy" onclick="navigator.clipboard&&navigator.clipboard.writeText(this.textContent);this.textContent=\'Copied ✓\';var t=this;setTimeout(function(){t.textContent=t.dataset.v},900)" data-v="' + esc(w.value) + '">' + esc(w.value) + '</code></li>'
     ).join('') : '<li class="wempty">Payment methods coming soon — check back shortly.</li>';
   }
   const oe = document.getElementById('ownerEmail'); if(oe) oe.textContent = CFG.OWNER_EMAIL;
@@ -1364,13 +1366,13 @@ function applyConfig(){
 applyConfig();
 
 /* ================= FAQ ================= */
-document.querySelectorAll('.faq-q').forEach(q=>{
-  q.addEventListener('click',()=>{
-    const item=q.parentElement, a=item.querySelector('.faq-a');
-    const open=item.classList.toggle('open');
-    a.style.maxHeight=open?a.scrollHeight+'px':'0';
-    document.querySelectorAll('.faq-item').forEach(o=>{
-      if(o!==item&&o.classList.contains('open')){o.classList.remove('open');o.querySelector('.faq-a').style.maxHeight='0';}
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement, a = item.querySelector('.faq-a');
+    const open = item.classList.toggle('open');
+    a.style.maxHeight = open ? a.scrollHeight + 'px' : '0';
+    document.querySelectorAll('.faq-item').forEach(o => {
+      if(o !== item && o.classList.contains('open')){ o.classList.remove('open'); o.querySelector('.faq-a').style.maxHeight = '0'; }
     });
   });
 });
